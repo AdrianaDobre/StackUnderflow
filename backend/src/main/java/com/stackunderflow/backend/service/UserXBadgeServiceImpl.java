@@ -12,12 +12,11 @@ import com.stackunderflow.backend.repository.UserXBadgeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UserXBadgeImpl implements UserXBadgeService{
+public class UserXBadgeServiceImpl implements UserXBadgeService{
     private final UserXBadgeRepository userXBadgeRepository;
     private final UserRepository userRepository;
     private final BadgeRepository badgeRepository;
