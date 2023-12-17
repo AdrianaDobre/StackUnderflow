@@ -1,6 +1,6 @@
 package com.stackunderflow.backend.controller;
 
-import com.stackunderflow.backend.DTOS.SaveComment;
+import com.stackunderflow.backend.DTOS.SaveCommentDTO;
 import com.stackunderflow.backend.model.Comment;
 import com.stackunderflow.backend.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/save")
-    void saveComment(@RequestBody SaveComment comment){
+    void saveComment(@RequestBody SaveCommentDTO comment){
         commentService.saveComment(comment);
     }
 

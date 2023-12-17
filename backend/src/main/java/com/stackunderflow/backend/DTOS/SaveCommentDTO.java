@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveComment {
+public class SaveCommentDTO {
     private Long postId;
     private Long userId;
     private String text;

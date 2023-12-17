@@ -50,4 +50,8 @@ public class Users {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Suggestion> suggestions;
 }

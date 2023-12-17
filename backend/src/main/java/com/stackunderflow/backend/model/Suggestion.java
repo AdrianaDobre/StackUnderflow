@@ -1,14 +1,12 @@
 package com.stackunderflow.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,29 +16,28 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "comment")
-public class Comment {
+@Table(name = "suggestion")
+public class Suggestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name="post_id", nullable = false)
-    private Post post;
+    @JoinColumn(name="user_id", nullable = false)
+    private Users user;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name="user_id", nullable = false)
-    private Users user;
+    @JoinColumn(name="comment_id", nullable = false)
+    private Comment comment;
 
     @NotNull
     private String text;
@@ -48,10 +45,7 @@ public class Comment {
     @NotNull
     private LocalDateTime date;
 
-    @NotNull
-    private Boolean isTheBest = Boolean.FALSE;
+    private Boolean accepted;
 
-    @OneToMany(mappedBy = "comment")
-    @JsonManagedReference
-    private List<Suggestion> suggestions;
+    private LocalDateTime acceptedOnDate;
 }

@@ -1,6 +1,6 @@
 package com.stackunderflow.backend.service;
 
-import com.stackunderflow.backend.DTOS.SaveComment;
+import com.stackunderflow.backend.DTOS.SaveCommentDTO;
 import com.stackunderflow.backend.model.Comment;
 import com.stackunderflow.backend.repository.CommentRepository;
 import com.stackunderflow.backend.repository.PostRepository;
@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService{
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     @Override
-    public void saveComment(SaveComment comment) {
+    public void saveComment(SaveCommentDTO comment) {
         Comment newComment = Comment.builder()
                 .user(userRepository.findById(comment.getUserId()).get())
                 .post(postRepository.findById(comment.getPostId()).get())
