@@ -1,34 +1,38 @@
 package com.stackunderflow.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@Table(name = "post")
-public class Post {
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name="post_id", nullable = false)
+    private Post post;
 
     @ManyToOne
     @JsonBackReference
@@ -36,14 +40,11 @@ public class Post {
     private Users user;
 
     @NotNull
-    private String title;
-
-    private String description;
+    private String text;
 
     @NotNull
     private LocalDateTime date;
 
-    @OneToMany(mappedBy = "post")
-    @JsonManagedReference
-    private List<Comment> comments;
+    @NotNull
+    private Boolean isTheBest = Boolean.FALSE;
 }
