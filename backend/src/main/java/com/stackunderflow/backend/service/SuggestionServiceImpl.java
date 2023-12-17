@@ -25,7 +25,7 @@ public class SuggestionServiceImpl implements SuggestionService{
                         .user(userRepository.findById(saveSuggestionDTO.getUserId()).get())
                         .comment(commentRepository.findById(saveSuggestionDTO.getCommentId()).get())
                         .text(saveSuggestionDTO.getText())
-                        .date(LocalDateTime.now()).build());
+                        .date(saveSuggestionDTO.getDate()).build());
     }
 
     @Override

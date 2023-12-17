@@ -46,4 +46,8 @@ public class Post {
     @OneToMany(mappedBy = "post")
     @JsonManagedReference
     private List<Comment> comments;
+
+//    @OneToMany(mappedBy = "post")
+//    @JsonManagedReference
+//    private List<PostXTopic> postXTopics;
 }
