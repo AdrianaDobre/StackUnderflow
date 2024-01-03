@@ -1,14 +1,17 @@
 package com.stackunderflow.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +23,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class Users {
     @Id
@@ -32,6 +36,7 @@ public class Users {
 
     @NotNull
     @Column(unique=true)
+    @Email(message = "Invalid email format")
     private String email;
 
     @Column(unique=true)
@@ -42,6 +47,10 @@ public class Users {
 
     @NotNull
     private Double points = (double) 0;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference

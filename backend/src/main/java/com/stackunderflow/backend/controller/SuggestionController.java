@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/suggestion")
+@RequestMapping("/api/suggestion")
 @RequiredArgsConstructor
 public class SuggestionController {
     private final SuggestionService suggestionService;

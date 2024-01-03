@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Getter
@@ -23,4 +24,17 @@ public class VoteId implements Serializable{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VoteId voteId = (VoteId) o;
+        return Objects.equals(comment, voteId.comment) && Objects.equals(user, voteId.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(comment, user);
+    }
 }

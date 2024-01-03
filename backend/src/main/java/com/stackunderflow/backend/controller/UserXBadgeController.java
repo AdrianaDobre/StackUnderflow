@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/userXBadge")
+@RequestMapping("/api/userXBadge")
 @RequiredArgsConstructor
 public class UserXBadgeController {
     private final UserXBadgeService userXBadgeService;
