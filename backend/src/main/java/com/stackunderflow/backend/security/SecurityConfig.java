@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,16 +42,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain securityFiletrChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .authorizeHttpRequests().requestMatchers(UNSECURED_URLS).permitAll().and()
-                //.authorizeHttpRequests().requestMatchers(NEEDS_AUTH).hasAnyAuthority("ADMIN", "USER", "DOCTOR").and()
-                //.authorizeHttpRequests().requestMatchers(ONLY_ACCESS_FOR_ADMIN).hasAuthority("ADMIN").and()
-                .authorizeHttpRequests().requestMatchers(ONLY_ACCESS_FOR_USER).hasAuthority("USER")
-                .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authenticationProvider(authenticationProvider())
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(UNSECURED_URLS).permitAll()
+                        .requestMatchers(ONLY_ACCESS_FOR_USER).hasAuthority("USER")
+                        .anyRequest().authenticated())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
