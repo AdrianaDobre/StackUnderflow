@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/vote")
+@RequestMapping("/api/vote")
 @RequiredArgsConstructor
 public class VoteController {
     private final VoteService voteService;

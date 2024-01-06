@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/badge")
+@RequestMapping("/api/badge")
 @RequiredArgsConstructor
 public class BadgeController {
     private final BadgeService badgeService;

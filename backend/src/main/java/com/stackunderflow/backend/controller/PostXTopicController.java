@@ -15,7 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/postXTopic")
+@RequestMapping("/api/postXTopic")
 @RequiredArgsConstructor
 public class PostXTopicController {
     private final PostXTopicService postXTopicService;
