@@ -1,20 +1,21 @@
 package com.stackunderflow.backend.DTOS;
 
+import com.stackunderflow.backend.model.Topic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveCommentDTO {
-    private Long postId;
-    private Long userId;
-    private String text;
+public class SavePostDTO {
+    private String title;
+    private String body;
+    private List<Topic> tags;
 }

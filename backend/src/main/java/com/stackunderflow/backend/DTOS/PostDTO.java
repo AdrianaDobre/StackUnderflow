@@ -6,15 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveCommentDTO {
-    private Long postId;
-    private Long userId;
-    private String text;
+public class PostDTO {
+    private String title;
+    private String body;
+    private List<String> tags;
+    private Long bestAnswer;
 }
