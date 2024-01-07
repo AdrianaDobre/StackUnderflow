@@ -1,37 +1,56 @@
 package com.stackunderflow.backend.service;
 
 import com.stackunderflow.backend.DTOS.CommentDTO;
+import com.stackunderflow.backend.DTOS.EditAnswerDTO;
+import com.stackunderflow.backend.DTOS.EditCommentDTO;
+import com.stackunderflow.backend.DTOS.Message;
 import com.stackunderflow.backend.DTOS.SaveCommentDTO;
+import com.stackunderflow.backend.DTOS.SuggestionDTOAns;
+import com.stackunderflow.backend.Exception.ForbiddenActionException;
+import com.stackunderflow.backend.Exception.NoEditAcceptedException;
 import com.stackunderflow.backend.Exception.ObjectNotFound;
 import com.stackunderflow.backend.model.Comment;
+import com.stackunderflow.backend.model.Post;
+import com.stackunderflow.backend.model.Suggestion;
+import com.stackunderflow.backend.model.Users;
 import com.stackunderflow.backend.model.Vote;
 import com.stackunderflow.backend.repository.CommentRepository;
 import com.stackunderflow.backend.repository.PostRepository;
+import com.stackunderflow.backend.repository.SuggestionRepository;
 import com.stackunderflow.backend.repository.UserRepository;
 import com.stackunderflow.backend.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+@Slf4j
+public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final VoteRepository voteRepository;
+    private final SuggestionRepository suggestionRepository;
+
     @Override
-    public void saveComment(SaveCommentDTO comment) {
+    public Message saveComment(SaveCommentDTO comment, String email) {
         Comment newComment = Comment.builder()
-                .user(userRepository.findById(comment.getUserId()).orElseThrow(() -> new ObjectNotFound("User not found")))
+                .user(userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found")))
                 .post(postRepository.findById(comment.getPostId()).orElseThrow(() -> new ObjectNotFound("Post not found")))
-                .text(comment.getText())
+                .text(comment.getBody())
                 .isTheBest(false)
                 .date(LocalDateTime.now()).build();
         commentRepository.save(newComment);
+        return new Message("Answer posted successfully");
     }
 
     @Override
@@ -41,17 +60,115 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentDTO getCommentById(Long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ObjectNotFound("Post not found"));
-        List<Vote> votes = voteRepository.getVotesByCommentId(id);
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ObjectNotFound("Comment not found"));
+        return getCommentDTO(comment);
+    }
+
+    private CommentDTO getCommentDTO(Comment comment) {
+        List<Vote> votes = voteRepository.getVotesByCommentId(comment.getId());
         Long upVoteCount = (long) votes.stream().filter(Vote::getVoteType).toList().size();
         Long downVoteCount = (long) votes.stream().filter(vote -> !vote.getVoteType()).toList().size();
+        List<Suggestion> edits = suggestionRepository.findByUserIdAndCommentIdOrderByAcceptedOnDateDesc(comment.getUser().getId(), comment.getId());
         return CommentDTO.builder()
-                .body(comment.getText())
+                .body(edits.isEmpty() ? comment.getText() : edits.get(0).getText())
                 .postId(comment.getPost().getId())
                 .userId(comment.getUser().getId())
                 .upVoteCount(upVoteCount)
                 .downVoteCount(downVoteCount)
-                .date(comment.getDate())
+                .username(comment.getUser().getUsername())
+                .createdDate(comment.getDate())
+                .lastModified(edits.isEmpty() ? comment.getDate() : edits.get(0).getAcceptedOnDate())
+                .revision((long) edits.size())
+                .build();
+    }
+
+    @Override
+    public Message editCommentById(Long commentId, EditCommentDTO editCommentDTO, String email) {
+        Comment foundComment = commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFound("The requested answer was not found"));
+        Users foundUser = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (!Objects.equals(foundComment.getUser().getId(), foundUser.getId())) {
+            throw new ForbiddenActionException("Cannot edit answer without ownership");
+        }
+        if (foundComment.getIsTheBest()) {
+            throw new NoEditAcceptedException("This is the best answer of the post. You cannot edit it anymore.");
+        }
+        suggestionRepository.save(Suggestion.builder()
+                .user(foundUser)
+                .comment(foundComment)
+                .text(editCommentDTO.getBody())
+                .date(foundComment.getDate())
+                .accepted(Boolean.TRUE)
+                .acceptedOnDate(LocalDateTime.now())
+                .build());
+        return new Message("Answer edited successfully");
+    }
+
+    @Override
+    public Message deleteCommentById(Long commentId, String email) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFound("The requested answer was not found"));
+        Users foundUser = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (!Objects.equals(comment.getUser().getId(), foundUser.getId())) {
+            throw new ForbiddenActionException("Cannot delete answer without ownership");
+        }
+        voteRepository.deleteVoteByCommentId(commentId);
+        commentRepository.delete(comment);
+        return new Message("Answer deleted successfully");
+    }
+
+    @Override
+    public List<CommentDTO> getAllByMostLikes(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
+        log.info("Post with id {} not found", post.getId());
+        List<Comment> comments = commentRepository.findAllByPostId(postId);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        comments.forEach(comment -> commentDTOS.add(getCommentDTO(comment)));
+        return commentDTOS.stream().sorted(Comparator.comparingLong(CommentDTO::getUpVoteCount).reversed()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SuggestionDTOAns> getAllSuggestions(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFound("The requested answer was not found"));
+        List<Suggestion> suggestions = suggestionRepository.findSuggestionsWithoutEdits(commentId, comment.getUser().getId());
+        return suggestions.stream().map(this::mapEntityToSuggestionDTOAns).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EditAnswerDTO> getAllEditsForComment(Long commentId) {
+        Comment foundComment = commentRepository.findById(commentId).orElseThrow(() -> new ObjectNotFound("The requested answer was not found"));
+        List<Suggestion> edits = suggestionRepository.findByUserIdAndCommentIdOrderByAcceptedOnDateDesc(foundComment.getUser().getId(), foundComment.getId());
+        return edits.stream().map(this::mapEntityToEditAnswerDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Message acceptSuggestion(Long id, Long suggestionId) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested answer was not found"));
+        log.info("comment with id {} was not found", comment.getId());
+        Suggestion suggestion = suggestionRepository.findById(suggestionId).orElseThrow(() -> new ObjectNotFound("Suggestion was not found"));
+        suggestion.setAccepted(true);
+        suggestion.setAcceptedOnDate(LocalDateTime.now());
+        suggestionRepository.save(suggestion);
+        Users user = suggestion.getUser();
+        user.setPoints(user.getPoints() + 5.d);
+        userRepository.save(user);
+        return new Message("Suggestion accepted successfully");
+    }
+
+    private SuggestionDTOAns mapEntityToSuggestionDTOAns(Suggestion suggestion) {
+        return SuggestionDTOAns.builder()
+                .suggestionId(suggestion.getId())
+                .body(suggestion.getText())
+                .userId(suggestion.getUser().getId())
+                .savedDate(suggestion.getDate())
+                .accepted(suggestion.getAccepted())
+                .acceptedOnDate(suggestion.getAcceptedOnDate())
+                .build();
+    }
+
+    private EditAnswerDTO mapEntityToEditAnswerDTO(Suggestion suggestion) {
+        return EditAnswerDTO.builder()
+                .body(suggestion.getText())
+                .revision(suggestion.getId())
+                .editDate(suggestion.getAcceptedOnDate())
                 .build();
     }
 }

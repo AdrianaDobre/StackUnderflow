@@ -6,9 +6,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface CommentRepository extends JpaRepository<Comment,Long> {
     @Modifying
     @Query("update Comment c set c.isTheBest = true where c.id = :answerId")
     @Transactional
     void chooseBestAnswer(Long answerId);
+
+    List<Comment> findAllByPostId(Long postId);
 }

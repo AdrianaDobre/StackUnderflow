@@ -9,7 +9,6 @@ import com.stackunderflow.backend.model.Comment;
 import com.stackunderflow.backend.model.Post;
 import com.stackunderflow.backend.model.PostXTopic;
 import com.stackunderflow.backend.model.PostXTopicId;
-import com.stackunderflow.backend.model.Topic;
 import com.stackunderflow.backend.model.Users;
 import com.stackunderflow.backend.repository.CommentRepository;
 import com.stackunderflow.backend.repository.PostRepository;
@@ -17,18 +16,18 @@ import com.stackunderflow.backend.repository.PostXTopicRepository;
 import com.stackunderflow.backend.repository.UserRepository;
 import com.stackunderflow.backend.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final PostXTopicRepository postXTopicRepository;
@@ -45,16 +44,16 @@ public class PostServiceImpl implements PostService{
                 .date(LocalDateTime.now()).build();
         postRepository.save(newPost);
         savePostDTO.getTags().forEach(tag -> {
-            postXTopicRepository.save(new PostXTopic(new PostXTopicId(newPost,tag)));
+            postXTopicRepository.save(new PostXTopic(new PostXTopicId(newPost, tag)));
         });
         return new Message("Post created successfully");
     }
 
     @Override
-    public Message editPost(SavePostDTO editPost,Long id, String email) {
+    public Message editPost(SavePostDTO editPost, Long id, String email) {
         Users user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
-        if (!Objects.equals(post.getUser().getId(), user.getId())){
+        if (!Objects.equals(post.getUser().getId(), user.getId())) {
             throw new ForbiddenActionException("Cannot edit post without ownership");
         }
         post.setTitle(editPost.getTitle());
@@ -63,7 +62,7 @@ public class PostServiceImpl implements PostService{
         postRepository.save(post);
         postXTopicRepository.deletePostXTopicByPostId(post.getId());
         editPost.getTags().forEach(tag -> {
-            postXTopicRepository.save(new PostXTopic(new PostXTopicId(post,tag)));
+            postXTopicRepository.save(new PostXTopic(new PostXTopicId(post, tag)));
         });
         return new Message("Post edited successfully");
     }
@@ -89,7 +88,7 @@ public class PostServiceImpl implements PostService{
     public Message deletePost(Long id, String email) {
         Users user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
-        if (!Objects.equals(post.getUser().getId(), user.getId())){
+        if (!Objects.equals(post.getUser().getId(), user.getId())) {
             throw new ForbiddenActionException("Cannot delete post without ownership");
         }
         post.getComments().forEach(comment -> {
@@ -101,9 +100,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Message chooseBestAnswer(Long answerId, String email) {
+    public Message chooseBestAnswer(Long id, Long answerId, String email) {
+        Users user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
+        if (!Objects.equals(user.getId(), post.getUser().getId())) {
+            throw new ForbiddenActionException("Cannot select best answer without ownership");
+        }
         Comment comment = commentRepository.findById(answerId).orElseThrow(() -> new ObjectNotFound("Answer not found"));
-        Users user = userRepository.findById(comment.getUser().getId()).orElseThrow(() -> new ObjectNotFound("User not found"));
+        log.info("Comment with id {} not found", comment.getId());
         user.setPoints(user.getPoints() + 10.d);
         commentRepository.chooseBestAnswer(answerId);
         userRepository.save(user);

@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveCommentDTO {
-    private Long postId;
+public class EditCommentDTO {
     private String body;
 }
