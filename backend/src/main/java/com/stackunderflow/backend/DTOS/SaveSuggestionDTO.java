@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class SaveSuggestionDTO{
-    private Long userId;
-    private Long commentId;
-    private String text;
-    private LocalDateTime date;
+    private Long answerId;
+    private String body;
 }

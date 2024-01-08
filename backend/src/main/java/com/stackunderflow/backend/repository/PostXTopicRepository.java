@@ -13,6 +13,9 @@ public interface PostXTopicRepository extends JpaRepository<PostXTopic, PostXTop
     @Query("select pt from PostXTopic pt where pt.id.post.id = :postId")
     List<PostXTopic> findPostXTopicByPostId(Long postId);
 
+    @Query("select pt from PostXTopic pt join Post p on p.id = pt.id.post.id where p.user.id = :userId")
+    List<PostXTopic> findPostXTopicByUserId(Long userId);
+
     @Modifying
     @Query("delete from PostXTopic pt where pt.id.post.id = :postId")
     @Transactional

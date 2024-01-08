@@ -74,4 +74,19 @@ public class CommentController {
     Message acceptSuggestion(@PathVariable Long id, @PathVariable Long suggestionId){
         return commentService.acceptSuggestion(id, suggestionId);
     }
+
+    @PostMapping("/{id}/like")
+    Message LikeAnswer(@PathVariable Long id, Principal principal) {
+         return commentService.likeComment(id, principal.getName());
+    }
+
+    @PostMapping("/{id}/dislike")
+    Message DislikeAnswer(@PathVariable Long id, Principal principal) {
+        return commentService.dislikeComment(id, principal.getName());
+    }
+
+    @DeleteMapping("/{id}")
+    Message deleteLikeOrDislike(@PathVariable Long id, Principal principal){
+        return commentService.deleteLikeOrDislike(id,principal.getName());
+    }
 }
