@@ -26,7 +26,7 @@ public class SecurityConfig {
 
     private static final String[] ONLY_ACCESS_FOR_ADMIN = {""};
     private static final String[] ONLY_ACCESS_FOR_USER = {"/api/topic/all"};
-    private static final String[] UNSECURED_URLS = {"/api/badge/**", "/api/auth/**"};
+    private static final String[] UNSECURED_URLS = {"/api/badge/**", "/api/auth/**", "/api/post/**"};
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -20,5 +20,5 @@ public class Vote {
     @EmbeddedId
     private VoteId id = new VoteId();
 
-    private Boolean voteType;
+    private Boolean voteType; // true -> like, false -> dislike
 }
