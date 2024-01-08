@@ -14,5 +14,5 @@ public interface PostService {
     List<Post> getAllPosts();
     PostDTO getPostById(Long id, String email);
     Message deletePost(Long id, String email);
-    Message chooseBestAnswer(Long answerId, String email);
+    Message chooseBestAnswer(Long id, Long answerId, String email);
 }

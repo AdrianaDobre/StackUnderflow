@@ -51,8 +51,8 @@ public class PostController {
         return postService.deletePost(id,principal.getName());
     }
 
-    @PutMapping("/{id}/bestAnswer")
-    Message chooseBestAnswer(@PathVariable Long id, Principal principal){
-        return postService.chooseBestAnswer(id, principal.getName());
+    @PutMapping("/{id}/bestAnswer/{answerId}")
+    Message chooseBestAnswer(@PathVariable Long id,@PathVariable Long answerId, Principal principal){
+        return postService.chooseBestAnswer(id,answerId, principal.getName());
     }
 }
