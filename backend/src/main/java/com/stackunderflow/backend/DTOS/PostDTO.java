@@ -1,5 +1,6 @@
 package com.stackunderflow.backend.DTOS;
 
+import com.stackunderflow.backend.model.Vote;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,4 +19,5 @@ public class PostDTO {
     private String body;
     private List<String> tags;
     private Long bestAnswer;
+    private List<Vote> votesByLoggedUser;
 }

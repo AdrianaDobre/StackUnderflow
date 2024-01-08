@@ -5,12 +5,7 @@ import com.stackunderflow.backend.DTOS.PostDTO;
 import com.stackunderflow.backend.DTOS.SavePostDTO;
 import com.stackunderflow.backend.Exception.ForbiddenActionException;
 import com.stackunderflow.backend.Exception.ObjectNotFound;
-import com.stackunderflow.backend.model.Comment;
-import com.stackunderflow.backend.model.Post;
-import com.stackunderflow.backend.model.PostXTopic;
-import com.stackunderflow.backend.model.PostXTopicId;
-import com.stackunderflow.backend.model.Topic;
-import com.stackunderflow.backend.model.Users;
+import com.stackunderflow.backend.model.*;
 import com.stackunderflow.backend.repository.CommentRepository;
 import com.stackunderflow.backend.repository.PostRepository;
 import com.stackunderflow.backend.repository.PostXTopicRepository;
@@ -74,14 +69,21 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDTO getPostById(Long id) {
+    public PostDTO getPostById(Long id, String email) {
         Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
         List<String> topics = postXTopicRepository.findPostXTopicByPostId(post.getId()).stream().map(object -> object.getId().getTopic().getName()).toList();
         List<Long> bestAnswers = post.getComments().stream().filter(Comment::getIsTheBest).map(Comment::getId).toList();
+        List<Vote> votes =  null;
+        if (email != null){
+            Users user = userRepository.findByEmail(email).get();
+            votes = voteRepository.getVotesByUserAndPostId(user.getId(), id);
+        }
+
         return PostDTO.builder()
                 .title(post.getTitle())
                 .body(post.getDescription())
                 .tags(topics)
+                .votesByLoggedUser(votes)
                 .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)).build();
     }
 
