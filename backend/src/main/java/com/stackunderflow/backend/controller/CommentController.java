@@ -86,7 +86,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    Message deleteLikeOrDislike(@PathVariable Long id, Principal principal) throws BadRequestException {
+    Message deleteLikeOrDislike(@PathVariable Long id, Principal principal){
         return commentService.deleteLikeOrDislike(id,principal.getName());
     }
 }

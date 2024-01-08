@@ -20,7 +20,6 @@ public class UserController {
     @PostMapping("/save")
     void saveUser(@RequestBody Users user){
         userService.saveUser(user);
-        log.info("test");
     }
 
     @GetMapping("/all")
