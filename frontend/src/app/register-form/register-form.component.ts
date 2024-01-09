@@ -1,5 +1,5 @@
-import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { NgIf } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
@@ -8,16 +8,18 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-login-form',
+  selector: 'app-register-form',
   standalone: true,
   imports: [MatFormFieldModule, MatButtonModule, NgIf, ReactiveFormsModule, MatIconModule, MatInputModule, RouterModule],
-  templateUrl: './login-form.component.html',
-  styleUrl: './login-form.component.scss'
+  templateUrl: './register-form.component.html',
+  styleUrl: './register-form.component.scss'
 })
-export class LoginFormComponent {
+export class RegisterFormComponent {
   hide:boolean = true
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required])
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+  confirmPassword = new FormControl('', [Validators.required]);
 
   constructor(){}
 
@@ -28,7 +30,7 @@ export class LoginFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  attemptLogin(){
-    console.log('attemptLogin');
+  attemptRegister(){
+    console.log('attempt register');
   }
 }
