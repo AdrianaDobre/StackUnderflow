@@ -51,4 +51,14 @@ public class CustomExceptionController extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleExpiredJwt(ExpiredJwtException exception){
         return new ResponseEntity<>(new CustomErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ForbiddenActionException.class)
+    public ResponseEntity<Object> handleForbiddenAction(ForbiddenActionException exception){
+        return new ResponseEntity<>(new CustomErrorResponse(exception.getMessage()), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NoEditAcceptedException.class)
+    public ResponseEntity<Object> handleNoEditAccepted(NoEditAcceptedException exception){
+        return new ResponseEntity<>(new CustomErrorResponse(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }

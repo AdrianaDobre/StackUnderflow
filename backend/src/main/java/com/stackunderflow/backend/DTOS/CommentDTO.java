@@ -13,7 +13,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaveSuggestionDTO{
-    private Long answerId;
+public class CommentDTO {
     private String body;
+    private Long postId;
+    private Long userId;
+    private String username;
+    private Long upVoteCount;
+    private Long downVoteCount;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModified;
+    private Long revision;
 }
