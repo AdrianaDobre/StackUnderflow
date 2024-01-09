@@ -18,6 +18,7 @@ mat-card {
         
         p{
             font-size: 16px;
+            margin-right: 8px; //because mat-icons have a native 8px margin-right property for unknown fucking reasons
         }
     }
 }
