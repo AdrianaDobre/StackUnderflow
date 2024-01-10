@@ -11,11 +11,7 @@ import com.stackunderflow.backend.model.Post;
 import com.stackunderflow.backend.model.PostXTopic;
 import com.stackunderflow.backend.model.PostXTopicId;
 import com.stackunderflow.backend.model.Users;
-import com.stackunderflow.backend.repository.CommentRepository;
-import com.stackunderflow.backend.repository.PostRepository;
-import com.stackunderflow.backend.repository.PostXTopicRepository;
-import com.stackunderflow.backend.repository.UserRepository;
-import com.stackunderflow.backend.repository.VoteRepository;
+import com.stackunderflow.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +30,8 @@ public class PostServiceImpl implements PostService {
     private final PostXTopicRepository postXTopicRepository;
     private final VoteRepository voteRepository;
     private final CommentRepository commentRepository;
+    private final BadgeRepository badgeRepository;
+    private final UserXBadgeRepository userXBadgeRepository;
 
     @Override
     public Message savePost(SavePostDTO savePostDTO, String email) {
@@ -47,6 +45,14 @@ public class PostServiceImpl implements PostService {
         savePostDTO.getTags().forEach(tag -> {
             postXTopicRepository.save(new PostXTopic(new PostXTopicId(newPost, tag)));
         });
+
+        int postsNr = postRepository.findPostsByUserId(user.getId()).size();
+        if(postsNr == 3){
+            Badge badge = badgeRepository.findById((long)1).get();
+            UserXBadgeId ubId = new UserXBadgeId(user, badge);
+            UserXBadge userXBadge = new UserXBadge(ubId, LocalDateTime.now());
+            userXBadgeRepository.save(userXBadge);
+        }
         return new Message("Post created successfully");
     }
 
@@ -104,6 +110,15 @@ public class PostServiceImpl implements PostService {
         });
         postXTopicRepository.deletePostXTopicByPostId(post.getId());
         postRepository.delete(post);
+
+        int postsNr = postRepository.findPostsByUserId(user.getId()).size();
+        if(postsNr == 2){
+            Badge badge = badgeRepository.findById((long)1).get();
+            UserXBadgeId ubId = new UserXBadgeId(user, badge);
+            UserXBadge userXBadge = userXBadgeRepository.findById(ubId).get();
+            userXBadgeRepository.delete(userXBadge);
+        }
+
         return new Message("Post deleted successfully");
     }
 
@@ -115,10 +130,41 @@ public class PostServiceImpl implements PostService {
             throw new ForbiddenActionException("Cannot select best answer without ownership");
         }
         Comment comment = commentRepository.findById(answerId).orElseThrow(() -> new ObjectNotFound("Answer not found"));
-        log.info("Comment with id {} not found", comment.getId());
         user.setPoints(user.getPoints() + 10.d);
         commentRepository.chooseBestAnswer(answerId);
         userRepository.save(user);
+
+        int answerNr = commentRepository.findBestAnswersByUserId(comment.getUser().getId()).size();
+        if(answerNr == 1){
+            Badge badge = badgeRepository.findById((long)3).get();
+            UserXBadgeId ubId = new UserXBadgeId(user, badge);
+            UserXBadge userXBadge = new UserXBadge(ubId, LocalDateTime.now());
+            userXBadgeRepository.save(userXBadge);
+        }
+
         return new Message("Best answer picked successfully");
+    }
+
+    @Override
+    public Message deleteBestAnswer(Long id, Long answerId, String email) {
+        Users user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
+        if (!Objects.equals(user.getId(), post.getUser().getId())) {
+            throw new ForbiddenActionException("Cannot delete best answer without ownership");
+        }
+        Comment comment = commentRepository.findById(answerId).orElseThrow(() -> new ObjectNotFound("Answer not found"));
+        user.setPoints(user.getPoints() - 10.d);
+        commentRepository.deleteBestAnswer(answerId);
+        userRepository.save(user);
+
+        int answerNr = commentRepository.findBestAnswersByUserId(comment.getUser().getId()).size();
+        if(answerNr == 0){
+            Badge badge = badgeRepository.findById((long)3).get();
+            UserXBadgeId ubId = new UserXBadgeId(user, badge);
+            UserXBadge userXBadge = userXBadgeRepository.findById(ubId).get();
+            userXBadgeRepository.delete(userXBadge);
+        }
+
+        return new Message("Best answer deleted successfully");
     }
 }
