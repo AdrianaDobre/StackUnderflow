@@ -18,11 +18,7 @@ import com.stackunderflow.backend.model.Suggestion;
 import com.stackunderflow.backend.model.Users;
 import com.stackunderflow.backend.model.Vote;
 import com.stackunderflow.backend.model.*;
-import com.stackunderflow.backend.repository.CommentRepository;
-import com.stackunderflow.backend.repository.PostRepository;
-import com.stackunderflow.backend.repository.SuggestionRepository;
-import com.stackunderflow.backend.repository.UserRepository;
-import com.stackunderflow.backend.repository.VoteRepository;
+import com.stackunderflow.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,16 +42,28 @@ public class CommentServiceImpl implements CommentService {
     private final PostRepository postRepository;
     private final VoteRepository voteRepository;
     private final SuggestionRepository suggestionRepository;
+    private final BadgeRepository badgeRepository;
+    private final UserXBadgeRepository userXBadgeRepository;
 
     @Override
     public Message saveComment(SaveCommentDTO comment, String email) {
+        Users user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         Comment newComment = Comment.builder()
-                .user(userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found")))
+                .user(user)
                 .post(postRepository.findById(comment.getPostId()).orElseThrow(() -> new ObjectNotFound("Post not found")))
                 .text(comment.getBody())
                 .isTheBest(false)
                 .date(LocalDateTime.now()).build();
         commentRepository.save(newComment);
+
+        int answerNr = commentRepository.findAnswersByUserId(user.getId()).size();
+        if(answerNr == 3){
+            Badge badge = badgeRepository.findById((long)2).get();
+            UserXBadgeId ubId = new UserXBadgeId(user, badge);
+            UserXBadge userXBadge = new UserXBadge(ubId, LocalDateTime.now());
+            userXBadgeRepository.save(userXBadge);
+        }
+
         return new Message("Answer posted successfully");
     }
 
@@ -118,6 +126,15 @@ public class CommentServiceImpl implements CommentService {
         }
         voteRepository.deleteVoteByCommentId(commentId);
         commentRepository.delete(comment);
+
+        int answerNr = commentRepository.findAnswersByUserId(foundUser.getId()).size();
+        if(answerNr == 2){
+            Badge badge = badgeRepository.findById((long)2).get();
+            UserXBadgeId ubId = new UserXBadgeId(foundUser, badge);
+            UserXBadge userXBadge = userXBadgeRepository.findById(ubId).get();
+            userXBadgeRepository.delete(userXBadge);
+        }
+
         return new Message("Answer deleted successfully");
     }
 
