@@ -3,13 +3,13 @@ package com.stackunderflow.backend.security.jwt;
 import com.stackunderflow.backend.DTOS.RegisterRequestAuth;
 import com.stackunderflow.backend.DTOS.TokenDTO;
 import com.stackunderflow.backend.Exception.BadCredentialsException;
-import com.stackunderflow.backend.Exception.ObjectNotFound;
 import com.stackunderflow.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +45,7 @@ public class JWTController {
                 TokenDTO token = jwtService.generateToken(authRequest.getEmail());
                 return new ResponseEntity<>(token, OK);
             }
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid email or password");
         }
         return null;
