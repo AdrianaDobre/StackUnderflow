@@ -4,7 +4,8 @@
     </div>
     <div class="register-login-wrapper">
         <span>
-            <button mat-button routerLink="login">Sign In</button>
+            <button mat-button routerLink="login" *ngIf="isLoggedIn==false">Sign In</button>
+            <button mat-button *ngIf="isLoggedIn" (click)="logOut()">Sign Out</button>
         </span>
     </div>
 </mat-toolbar>

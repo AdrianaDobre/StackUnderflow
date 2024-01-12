@@ -5,7 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../service/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register-form',
@@ -21,7 +23,7 @@ export class RegisterFormComponent {
   password = new FormControl('', [Validators.required]);
   confirmPassword = new FormControl('', [Validators.required]);
 
-  constructor(){}
+  constructor(private authService:AuthService, private router:Router, private _snackBar:MatSnackBar){}
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -30,7 +32,35 @@ export class RegisterFormComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
+  formValid(){
+    return this.password.value == this.confirmPassword.value && this.email.valid && this.username.valid;
+  }
+
   attemptRegister(){
-    console.log('attempt register');
+    if (this.formValid()){
+      const userRegister = {
+        email:this.email.value,
+        password:this.password.value,
+        username:this.username.value,
+        retypePassword:this.confirmPassword.value
+      }
+
+      this.authService.proceedRegister(userRegister).subscribe({
+        next: (r) => {
+          localStorage.setItem('token', r.token)
+          this.router.navigate(['/']).then(()=>window.location.reload())
+        },
+        error: (e) => {
+          this._snackBar.open(e.error.message, "Dismiss", {
+            duration:2000
+          })
+        }
+      })
+    }
+    else{
+      this._snackBar.open("Error, check all fields and try again", "Dismiss", {
+        duration:2000
+      })
+    }
   }
 }
