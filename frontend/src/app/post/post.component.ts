@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PostService } from '../service/post.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 
@@ -24,18 +24,24 @@ export class PostComponent implements OnInit{
   createdDate!:Date;
   userName!:string;
 
-  constructor(private postService:PostService, private route:ActivatedRoute){ }
+  constructor(private postService:PostService, private route:ActivatedRoute, private router:Router){ }
 
   ngOnInit(): void {
     this.postId=this.route.snapshot.paramMap.get("id")!;
-    this.postService.retrievePostById(this.postId).subscribe(r=>{
-      this.title=r.title,
-      this.body=r.body,
-      this.tags=r.tags,
-      this.bestAnswer=r.bestAnswer,
-      this.votesByLoggedUser=r.votesByLoggedUser;
-      this.createdDate=r.createdDate;
-      this.userName=r.userName;
-    });
+    this.postService.retrievePostById(this.postId).subscribe({
+      next: (r) => {
+        this.title=r.title,
+        this.body=r.body,
+        this.tags=r.tags,
+        this.bestAnswer=r.bestAnswer,
+        this.votesByLoggedUser=r.votesByLoggedUser;
+        this.createdDate=r.createdDate;
+        this.userName=r.userName;
+      },
+        error: (e) => {
+          console.log(e)
+            this.router.navigateByUrl('/404')
+          }
+      })
   }
 }

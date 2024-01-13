@@ -8,6 +8,6 @@ export const routes: Routes = [
     {path: 'login', component: LoginFormComponent, pathMatch: 'full'},
     {path: 'register', component: RegisterFormComponent, pathMatch: 'full'},
     {path: 'view/:id', component: PostComponent},
-    {path: '', component: PostComponent},
+    {path: '', component: LoginFormComponent},
     {path: '**', component: NotFoundComponent}
 ];
