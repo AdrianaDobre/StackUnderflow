@@ -21,6 +21,5 @@ export class AddPostComponent {
 
   handleSelect($event:any){
     this.topics=$event;
-    console.log(this.topics)
   }
 }

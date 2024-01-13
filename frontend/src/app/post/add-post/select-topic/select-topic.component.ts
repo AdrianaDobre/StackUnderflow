@@ -25,14 +25,18 @@ export class SelectTopicComponent implements OnInit{
     });
   }
 
-  changeSelected(parameter: string, query: string) {
+  changeSelected(parameter: string, query: any) {
     const index = this.selectedChips.indexOf(query);
     if (index >= 0) {
       this.selectedChips.splice(index, 1);
     } else {
-      this.selectedChips.push(query);
+      this.selectedChips.push({
+        //sanitize object
+        id:query.id,
+        name:query.name
+      });
     }
-
+    
     this.onChipSelected.emit(this.selectedChips);
   }
 }
