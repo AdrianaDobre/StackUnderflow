@@ -32,6 +32,15 @@ export class AuthService {
     return ""
   }
 
+  getUserIdFromToken(){
+    let token =  localStorage.getItem('token')!
+    let decodedJWT = JSON.parse(window.atob(token.split('.')[1]))
+    if (this.isLoggedIn()) {
+      return decodedJWT.id;
+    }
+    return ""
+  }
+
   isLoggedIn(){
     return localStorage.getItem('token') != null;
   }
