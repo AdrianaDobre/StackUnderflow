@@ -7,7 +7,7 @@ import { AddPostComponent } from './post/add-post/add-post.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NavbarComponent, AddPostComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
