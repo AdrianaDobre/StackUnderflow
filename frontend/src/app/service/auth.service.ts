@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { devEnv } from '../../../environments/dev';
 import { Observable, map } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,6 @@ export class AuthService {
   constructor(private http:HttpClient) { }
 
   private readonly apiurl = devEnv.apiUrl + '/auth';
-  
 
   proceedLogin(user:any) : Observable<AuthResponse>{
     return this.http.post<AuthResponse>(this.apiurl+"/login", user).pipe(map((r:AuthResponse)=>({

@@ -1,0 +1,9 @@
+<mat-chip-listbox multiple [selectable]="true">
+    <mat-chip-option
+      *ngFor="let chip of options"
+      [selected]="chip.state" (click)="chip.state=!chip.state;changeSelected('s', chip)"
+    >
+      {{chip.name}}
+    </mat-chip-option>
+  </mat-chip-listbox>
+  
