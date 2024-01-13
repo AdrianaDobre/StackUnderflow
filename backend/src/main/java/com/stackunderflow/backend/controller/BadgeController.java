@@ -4,6 +4,9 @@ import com.stackunderflow.backend.model.Badge;
 import com.stackunderflow.backend.service.BadgeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,13 +22,14 @@ import java.util.List;
 public class BadgeController {
     private final BadgeService badgeService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/save")
     void saveBadge(@RequestBody Badge badge){
         badgeService.saveBadge(badge);
     }
 
     @GetMapping("/all")
-    List<Badge> getAllBadges(){
-        return badgeService.getAllBadges();
+    ResponseEntity<List<Badge>> getAllBadges(){
+        return new ResponseEntity<>(badgeService.getAllBadges(), HttpStatus.OK);
     }
 }

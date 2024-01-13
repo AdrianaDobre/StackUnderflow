@@ -10,6 +10,9 @@ import com.stackunderflow.backend.model.Comment;
 import com.stackunderflow.backend.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,63 +33,70 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
-    Message saveComment(@RequestBody SaveCommentDTO comment, Principal principal){
-        return commentService.saveComment(comment, principal.getName());
+    ResponseEntity<Message> saveComment(@RequestBody SaveCommentDTO comment, Principal principal){
+        return new ResponseEntity<>(commentService.saveComment(comment, principal.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/allComments")
-    List<Comment> getAllComments(){
-        return commentService.getAllComments();
+    ResponseEntity<List<Comment>> getAllComments(){
+        return new ResponseEntity<>(commentService.getAllComments(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    CommentDTO getCommentById(@PathVariable Long id){
-        return commentService.getCommentById(id);
+    ResponseEntity<CommentDTO> getCommentById(@PathVariable Long id){
+        return new ResponseEntity<>(commentService.getCommentById(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/edit/{id}")
-    Message editCommentById(@PathVariable Long id, @RequestBody EditCommentDTO editCommentDTO, Principal principal){
-        return commentService.editCommentById(id, editCommentDTO,principal.getName());
+    ResponseEntity<Message> editCommentById(@PathVariable Long id, @RequestBody EditCommentDTO editCommentDTO, Principal principal){
+        return new ResponseEntity<>(commentService.editCommentById(id, editCommentDTO,principal.getName()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/delete/{id}")
-    Message deleteCommentById(@PathVariable Long id, Principal principal){
-        return commentService.deleteCommentById(id,principal.getName());
+    ResponseEntity<Message> deleteCommentById(@PathVariable Long id, Principal principal){
+        return new ResponseEntity<>(commentService.deleteCommentById(id,principal.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    List<CommentDTO> getAllByMostLikes(@RequestParam Long postId){
-        return commentService.getAllByMostLikes(postId);
+    ResponseEntity<List<CommentDTO>> getAllByMostLikes(@RequestParam Long postId){
+        return new ResponseEntity<>(commentService.getAllByMostLikes(postId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/suggestions")
-    List<SuggestionDTOAns> getAllSuggestions(@PathVariable Long id){
-        return commentService.getAllSuggestions(id);
+    ResponseEntity<List<SuggestionDTOAns>> getAllSuggestions(@PathVariable Long id){
+        return new ResponseEntity<>(commentService.getAllSuggestions(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/history")
-    List<EditAnswerDTO> getAllEditsForComment(@PathVariable Long id){
-        return commentService.getAllEditsForComment(id);
+    ResponseEntity<List<EditAnswerDTO>> getAllEditsForComment(@PathVariable Long id){
+        return new ResponseEntity<>(commentService.getAllEditsForComment(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}/accept/{suggestionId}")
-    Message acceptSuggestion(@PathVariable Long id, @PathVariable Long suggestionId){
-        return commentService.acceptSuggestion(id, suggestionId);
+    ResponseEntity<Message> acceptSuggestion(@PathVariable Long id, @PathVariable Long suggestionId){
+        return new ResponseEntity<>(commentService.acceptSuggestion(id, suggestionId), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/{id}/like")
-    Message LikeAnswer(@PathVariable Long id, Principal principal) {
-         return commentService.likeComment(id, principal.getName());
+    ResponseEntity<Message> LikeAnswer(@PathVariable Long id, Principal principal) {
+        return new ResponseEntity<>(commentService.likeComment(id, principal.getName()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/{id}/dislike")
-    Message DislikeAnswer(@PathVariable Long id, Principal principal) {
-        return commentService.dislikeComment(id, principal.getName());
+    ResponseEntity<Message> DislikeAnswer(@PathVariable Long id, Principal principal) {
+        return new ResponseEntity<>(commentService.dislikeComment(id, principal.getName()), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    Message deleteLikeOrDislike(@PathVariable Long id, Principal principal){
-        return commentService.deleteLikeOrDislike(id,principal.getName());
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("/deleteLikeOrDislike/{id}")
+    ResponseEntity<Message> deleteLikeOrDislike(@PathVariable Long id, Principal principal){
+        return new ResponseEntity<>(commentService.deleteLikeOrDislike(id,principal.getName()), HttpStatus.OK);
     }
 }

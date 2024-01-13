@@ -25,8 +25,15 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
 
     private static final String[] ONLY_ACCESS_FOR_ADMIN = {""};
-    private static final String[] ONLY_ACCESS_FOR_USER = {"/api/topic/all"};
-    private static final String[] UNSECURED_URLS = {"/api/badge/**", "/api/auth/**", "/api/post/**"};
+    private static final String[] ONLY_ACCESS_FOR_USER = {"/api/badge/save", "/api/answer", "/api/answer/edit/{id}", "/api/answer/delete/{id}",
+            "/api/answer/{id}/accept/{suggestionId}", "/api/answer/{id}/like", "/api/answer/{id}/dislike", "/api/answer/deleteLikeOrDislike/{id}", "/api/post",
+            "/api/post/edit/{id}", "/api/post/{id}", "/api/post/delete/{id}", "api/post/{id}/bestAnswer/{answerId}", "/api/post/{id}/bestAnswer/{answerId}",
+            "/api/suggestion", "/api/delete/suggestion/{id}", "/api/postXTopic/save", "/api/topic/save", "/api/user/all", "/api/user/{id}",
+            "/api/userXBadge/save", "/api/vote/save"};
+
+    private static final String[] UNSECURED_URLS = {"/api/auth/register", "/api/auth/login", "/api/badge/all", "/api/answer/allComments",
+            "/api/answer/{id}", "/api/answer/all", "/api/answer/{id}/suggestions", "/api/answer/{id}/history", "/api/post/all",
+            "/api/suggestion/all", "/api/suggestion/{id}", "/api/postXTopic/all", "/api/topic/all", "/api/user/save", "/api/userXBadge/all", "/api/vote/all"};
 
     @Bean
     public PasswordEncoder passwordEncoder() {
