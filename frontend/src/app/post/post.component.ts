@@ -5,11 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { PostService } from '../service/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, AnswerGridComponent],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
