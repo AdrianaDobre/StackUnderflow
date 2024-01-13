@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
         savePostDTO.getTags().forEach(tag -> {
             postXTopicRepository.save(new PostXTopic(new PostXTopicId(newPost, tag)));
         });
-        return new Message("Post created successfully");
+        return new Message(newPost.getId().toString());
     }
 
     @Override
@@ -89,7 +89,10 @@ public class PostServiceImpl implements PostService {
                 .body(post.getDescription())
                 .tags(topics)
                 .votesByLoggedUser(votes)
-                .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)).build();
+                .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0))
+                .createdDate(post.getDate())
+                .userName(post.getUser().getUsername())
+                .build();
     }
 
     @Override

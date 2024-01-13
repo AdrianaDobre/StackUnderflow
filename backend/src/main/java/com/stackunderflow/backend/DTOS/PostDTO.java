@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -20,4 +22,6 @@ public class PostDTO {
     private List<String> tags;
     private Long bestAnswer;
     private List<Vote> votesByLoggedUser;
+    private LocalDateTime createdDate;
+    private String userName;
 }
