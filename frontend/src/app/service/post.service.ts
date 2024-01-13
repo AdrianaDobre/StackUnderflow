@@ -20,4 +20,8 @@ export class PostService {
     return this.http.post<ResponseMessage>(this.apiurl, post, {headers: headers})
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
+
+  retrievePostById(id:any) : Observable<any>{
+    return this.http.get(this.apiurl + `/${id}`)
+  }
 }

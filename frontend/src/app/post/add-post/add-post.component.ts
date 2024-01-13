@@ -41,7 +41,7 @@ export class AddPostComponent {
 
       this.postService.createPost(post).subscribe({
         next: (r) => {
-          this.router.navigate(['/']).then(()=>window.location.reload())
+          this.router.navigate(['']).then(()=>window.location.reload())
         },
         error: (e) => {
           this._snackBar.open(e.error.message, "Dismiss", {
