@@ -19,6 +19,6 @@
     </div>
 </mat-card>
 
-<app-answer-grid *ngIf="isFullPost"></app-answer-grid>
+<app-answer-grid *ngIf="isFullPost" [userId]="userId"></app-answer-grid>
 <app-add-answer *ngIf="isFullPost"></app-add-answer>
   

@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './answer-grid.component.scss'
 })
 export class AnswerGridComponent implements OnInit {
+  @Input() userId = '';
   answers?:Array<any>;
   
   constructor(private answerService:AnswerService, private route:ActivatedRoute){}

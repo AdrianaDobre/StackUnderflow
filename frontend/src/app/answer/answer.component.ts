@@ -22,6 +22,8 @@ export class AnswerComponent implements OnInit {
   isLoggedIn!:boolean;
   userId!:string;
 
+  @Input() postUserId = '';
+
   constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar, private postService:PostService) { }
 
   ngOnInit(): void {
