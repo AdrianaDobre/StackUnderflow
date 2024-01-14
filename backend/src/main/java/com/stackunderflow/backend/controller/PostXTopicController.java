@@ -5,6 +5,9 @@ import com.stackunderflow.backend.model.PostXTopic;
 import com.stackunderflow.backend.service.PostXTopicService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +23,14 @@ import java.util.List;
 public class PostXTopicController {
     private final PostXTopicService postXTopicService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/save")
     void savePostXTopic(@RequestBody AddTopicToPostDTO addTopicToPostDTO){
         postXTopicService.savePostXTopic(addTopicToPostDTO);
     }
 
     @GetMapping("/all")
-    List<PostXTopic> getAllPostXTopics(){
-        return postXTopicService.getAllPostXTopics();
+    ResponseEntity<List<PostXTopic>> getAllPostXTopics(){
+        return new ResponseEntity<>(postXTopicService.getAllPostXTopics(), HttpStatus.OK);
     }
 }

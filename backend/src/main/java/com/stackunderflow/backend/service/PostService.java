@@ -15,4 +15,5 @@ public interface PostService {
     PostDTO getPostById(Long id, String email);
     Message deletePost(Long id, String email);
     Message chooseBestAnswer(Long id, Long answerId, String email);
+    Message deleteBestAnswer(Long id, Long answerId, String email);
 }

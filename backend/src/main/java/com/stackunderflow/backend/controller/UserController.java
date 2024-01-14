@@ -5,6 +5,9 @@ import com.stackunderflow.backend.model.Users;
 import com.stackunderflow.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,23 +25,27 @@ public class UserController {
         userService.saveUser(user);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/all")
-    List<Users> getAllUsers(){
-        return userService.getAllUsers();
+    ResponseEntity<List<Users>> getAllUsers(){
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/{id}")
-    UserDTO getUserById(@PathVariable Long id){
-        return userService.getUserById(id);
+    ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{id}")
-    Message editUser(@RequestBody EditUserDTO user, @PathVariable Long id, Principal principal){
-        return userService.editUser(user,id,principal.getName());
+    ResponseEntity<Message> editUser(@RequestBody EditUserDTO user, @PathVariable Long id, Principal principal){
+        return new ResponseEntity<>(userService.editUser(user,id,principal.getName()), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/{id}")
-    Message deleteUser(@PathVariable Long id, Principal principal){
-        return userService.deleteUser(id, principal.getName());
+    ResponseEntity<Message> deleteUser(@PathVariable Long id, Principal principal){
+        return new ResponseEntity<>(userService.deleteUser(id, principal.getName()), HttpStatus.OK);
     }
 }
