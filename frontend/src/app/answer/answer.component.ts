@@ -20,8 +20,9 @@ export class AnswerComponent implements OnInit {
   @Input() 
   answer!:any;
   isLoggedIn!:boolean;
+  userId!:string;
 
-  constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar) { }
+  constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar, private postService:PostService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -59,6 +60,10 @@ export class AnswerComponent implements OnInit {
 
   getUserIdFromToken() { 
     return this.authService.getUserIdFromToken()
+  }
+
+  isLoggedInFunc() {
+    return this.authService.isLoggedIn()
   }
 
   // getPostUserId(){
