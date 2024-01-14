@@ -24,4 +24,8 @@ export class NavbarComponent implements OnInit {
     this.authService.logOut()
     this.router.navigate(["/"]).then(() => window.location.reload())
   }
+
+  navigateToHome() {
+    this.router.navigate(["/"])
+  }
 }

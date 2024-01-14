@@ -21,7 +21,11 @@ export class PostService {
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
 
-  retrievePostById(id:any) : Observable<any>{
+  getPostById(id:any) : Observable<any>{
     return this.http.get(this.apiurl + `/${id}`)
+  }
+
+  getAllPosts() : Observable<any>{
+    return this.http.get(this.apiurl + `/all`)
   }
 }
