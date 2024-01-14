@@ -20,5 +20,5 @@
 </mat-card>
 
 <app-answer-grid *ngIf="isFullPost" [userId]="userId"></app-answer-grid>
-<app-add-answer *ngIf="isFullPost"></app-add-answer>
+<app-add-answer *ngIf="isFullPost" [ngClass]="!isLoggedIn() ? 'button-hidden' : 'button-shown'"></app-add-answer>
   
