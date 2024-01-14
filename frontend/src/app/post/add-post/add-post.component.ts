@@ -56,4 +56,8 @@ export class AddPostComponent {
       })
     }
   }
+
+  goToHome() {
+    this.router.navigateByUrl('')
+  }
 }

@@ -4,11 +4,13 @@ import { RegisterFormComponent } from './register-form/register-form.component';
 import { PostComponent } from './post/post.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { AddPostComponent } from './post/add-post/add-post.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginFormComponent, pathMatch: 'full'},
     {path: 'register', component: RegisterFormComponent, pathMatch: 'full'},
     {path: 'view/:id', component: PostComponent},
+    {path: 'question', component: AddPostComponent},
     {path: '', component: HomeComponent},
     {path: '**', component: NotFoundComponent}
 ];
