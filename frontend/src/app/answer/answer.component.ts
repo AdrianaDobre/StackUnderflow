@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { AnswerService } from '../service/answer.service';
 
 @Component({
   selector: 'app-answer',
@@ -12,7 +13,27 @@ import { CommonModule } from '@angular/common';
   styleUrl: './answer.component.scss'
 })
 
-export class AnswerComponent {
+export class AnswerComponent implements OnInit {
   @Input() 
   answer!:any;
+  upvoted!:boolean;
+  downvoted!:boolean;
+
+  constructor(private answerService:AnswerService) { }
+
+  ngOnInit(): void {
+    
+  }
+
+  proceedUpvote(){
+    this.answerService.upvoteAnswer(this.answer.answerId).subscribe(r=>r);
+  }
+
+  proceedDownvote(){
+    this.answerService.downvoteAnswer(this.answer.answerId).subscribe(r=>r);
+  }
+
+  deleteVote(){
+    this.answerService.deleteVote(this.answer.answerId).subscribe(r=>r);
+  }
 }

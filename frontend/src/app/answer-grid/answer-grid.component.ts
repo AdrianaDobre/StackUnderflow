@@ -19,5 +19,4 @@ export class AnswerGridComponent implements OnInit {
   ngOnInit(): void {
     this.answerService.retrieveAnswersByPostId(this.route.snapshot.paramMap.get("id")).subscribe(r => this.answers=r)  //bad but works
   }
-
 }
