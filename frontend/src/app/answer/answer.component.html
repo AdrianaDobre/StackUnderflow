@@ -19,9 +19,9 @@
             <p> {{answer.body}} </p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button>Suggest Edit</button>
-            <button mat-button>Delete</button>
-            <button mat-button>Pick Best</button>
+            <button [ngClass]="!isLoggedIn() ? 'button-hidden' : 'button-shown'" mat-button>Suggest Edit</button>
+            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Delete</button>
+            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Pick Best</button>
             <button mat-button>History</button>
         </mat-card-actions>
     </div>

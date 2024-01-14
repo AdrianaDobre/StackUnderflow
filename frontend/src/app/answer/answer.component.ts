@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AnswerService } from '../service/answer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../service/auth.service';
+import { PostService } from '../service/post.service';
 
 @Component({
   selector: 'app-answer',
@@ -55,4 +56,12 @@ export class AnswerComponent implements OnInit {
   deleteVote(){
     this.answerService.deleteVote(this.answer.answerId).subscribe(r=>r);
   }
+
+  getUserIdFromToken() { 
+    return this.authService.getUserIdFromToken()
+  }
+
+  // getPostUserId(){
+  //   return this.postService.getPostById(this.postId).userId
+  // }
 }
