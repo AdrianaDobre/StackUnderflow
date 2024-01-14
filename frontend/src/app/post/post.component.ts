@@ -7,11 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 import { MatChipsModule } from '@angular/material/chips';
+import { AddAnswerComponent } from '../answer/add-answer/add-answer.component';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, AnswerGridComponent, MatChipsModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, AnswerGridComponent, MatChipsModule, AddAnswerComponent],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
@@ -25,11 +26,14 @@ export class PostComponent implements OnInit{
   createdDate!:Date;
   userName!:string;
 
+  isFullPost!:boolean;
+
   constructor(private postService:PostService, private route:ActivatedRoute, private router:Router){ }
 
   ngOnInit(): void {
+    if (this.route.snapshot.paramMap.get('id')) this.isFullPost = true;
     const id = this.route.snapshot.paramMap.get('id') || this.postId;
-    this.postId = id;
+
     if (!id) { this.router.navigateByUrl('/404'); }
 
     this.postService.getPostById(id).subscribe({
@@ -43,7 +47,6 @@ export class PostComponent implements OnInit{
         this.userName=r.userName;
       },
         error: (e) => {
-          console.log(e)
             this.router.navigateByUrl('/404')
           }
       })

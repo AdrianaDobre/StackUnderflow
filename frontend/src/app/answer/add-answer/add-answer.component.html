@@ -1,1 +1,18 @@
-<p>add-answer works!</p>
+<mat-card class="mt-4">
+    <div class="ml-4 header-content-wrapper">
+        <mat-card-header>
+        <mat-card-title>Your answer</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mt-2">
+            <form class="example-form"><mat-form-field class="example-full-width">
+                  <mat-label>Write your answer here</mat-label>
+                  <textarea matInput [formControl]="answer"></textarea>
+                </mat-form-field>
+              </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button (click)="saveAnswer()" class="ml-2" mat-raised-button>Post answer</button>
+        </mat-card-actions>
+    </div>
+</mat-card>
