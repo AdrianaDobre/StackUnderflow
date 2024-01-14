@@ -24,6 +24,7 @@ export class PostComponent implements OnInit{
   votesByLoggedUser?:Array<any>;
   createdDate!:Date;
   userName!:string;
+  userId!:string;
 
   constructor(private postService:PostService, private route:ActivatedRoute, private router:Router){ }
 
@@ -41,6 +42,7 @@ export class PostComponent implements OnInit{
         this.votesByLoggedUser=r.votesByLoggedUser;
         this.createdDate=r.createdDate;
         this.userName=r.userName;
+        this.userId=r.userId;
       },
         error: (e) => {
           console.log(e)
