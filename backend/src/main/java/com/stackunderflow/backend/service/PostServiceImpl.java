@@ -3,6 +3,7 @@ package com.stackunderflow.backend.service;
 import com.stackunderflow.backend.DTOS.Message;
 import com.stackunderflow.backend.DTOS.PostDTO;
 import com.stackunderflow.backend.DTOS.SavePostDTO;
+import com.stackunderflow.backend.DTOS.VoteDTO;
 import com.stackunderflow.backend.Exception.ForbiddenActionException;
 import com.stackunderflow.backend.Exception.ObjectNotFound;
 import com.stackunderflow.backend.model.*;
@@ -18,8 +19,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -84,7 +87,7 @@ public class PostServiceImpl implements PostService {
         Post post = postRepository.findById(id).orElseThrow(() -> new ObjectNotFound("The requested post was not found"));
         List<String> topics = postXTopicRepository.findPostXTopicByPostId(post.getId()).stream().map(object -> object.getId().getTopic().getName()).toList();
         List<Long> bestAnswers = post.getComments().stream().filter(Comment::getIsTheBest).map(Comment::getId).toList();
-        List<Vote> votes =  null;
+        List<Vote> votes =  new ArrayList<>();
         if (email != null){
             Users user = userRepository.findByEmail(email).get();
             votes = voteRepository.getVotesByUserAndPostId(user.getId(), id);
@@ -94,8 +97,14 @@ public class PostServiceImpl implements PostService {
                 .title(post.getTitle())
                 .body(post.getDescription())
                 .tags(topics)
-                .votesByLoggedUser(votes)
+                .votesByLoggedUser(votes.isEmpty() ? null : votes.stream().map(this::mapEntityToVoteDTO).collect(Collectors.toList()))
                 .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)).build();
+    }
+
+    private VoteDTO mapEntityToVoteDTO(Vote vote) {
+        return VoteDTO.builder()
+                .commentId(vote.getId().getComment().getId())
+                .voteType(vote.getVoteType()).build();
     }
 
     @Override
