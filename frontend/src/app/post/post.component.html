@@ -13,8 +13,8 @@
             <p> {{body}} </p>
         </mat-card-content>
         <mat-card-actions>
-            <button [ngClass]="getUserIdFromToken() == userId ? 'button-shown' : 'button-hidden'" mat-button>Edit</button>
-            <button [ngClass]="getUserIdFromToken() == userId ? 'button-shown' : 'button-hidden'" mat-button>Delete</button>
+            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Edit</button>
+            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Delete</button>
         </mat-card-actions>
     </div>
 </mat-card>

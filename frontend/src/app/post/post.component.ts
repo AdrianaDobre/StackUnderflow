@@ -64,4 +64,8 @@ export class PostComponent implements OnInit{
   getUserIdFromToken() { 
     return this.authService.getUserIdFromToken()
   }
+
+  isLoggedIn() {
+    return this.authService.isLoggedIn()
+  }
 }
