@@ -24,4 +24,5 @@ public class PostDTO {
     private List<Vote> votesByLoggedUser;
     private LocalDateTime createdDate;
     private String userName;
+    private Long userId;
 }

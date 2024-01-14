@@ -25,6 +25,7 @@ export class PostComponent implements OnInit{
   votesByLoggedUser?:Array<any>;
   createdDate!:Date;
   userName!:string;
+  userId!:string;
 
   isFullPost!:boolean;
 
@@ -45,6 +46,7 @@ export class PostComponent implements OnInit{
         this.votesByLoggedUser=r.votesByLoggedUser;
         this.createdDate=r.createdDate;
         this.userName=r.userName;
+        this.userId=r.userId;
       },
         error: (e) => {
             this.router.navigateByUrl('/404')
