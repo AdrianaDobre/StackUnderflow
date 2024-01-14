@@ -39,6 +39,7 @@ public class JWTService {
     public TokenDTO tokenCreator(Map<String, Object> claims, String userName) {
         long currentDate = System.currentTimeMillis();
         claims.put("id", userRepository.findByEmail(userName).orElseThrow(() -> new UsernameNotFoundException("Not found")).getId());
+        claims.put("username", userRepository.findByEmail(userName).orElseThrow(() -> new UsernameNotFoundException("Not found")).getUsername());
         String token = Jwts.builder()
                 .claims(claims)
                 .subject(userName)

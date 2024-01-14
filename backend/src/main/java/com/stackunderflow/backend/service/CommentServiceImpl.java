@@ -84,6 +84,7 @@ public class CommentServiceImpl implements CommentService {
         Long downVoteCount = (long) votes.stream().filter(vote -> !vote.getVoteType()).toList().size();
         List<Suggestion> edits = suggestionRepository.findByUserIdAndCommentIdOrderByAcceptedOnDateDesc(comment.getUser().getId(), comment.getId());
         return CommentDTO.builder()
+                .answerId(comment.getId())
                 .body(edits.isEmpty() ? comment.getText() : edits.get(0).getText())
                 .postId(comment.getPost().getId())
                 .userId(comment.getUser().getId())

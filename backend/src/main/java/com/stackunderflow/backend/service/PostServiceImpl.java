@@ -98,6 +98,7 @@ public class PostServiceImpl implements PostService {
                 .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0))
                 .createdDate(post.getDate())
                 .userName(post.getUser().getUsername())
+                .userId(post.getUser().getId())
                 .build();
     }
 
