@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AnswerService } from '../service/answer.service';
 import { ActivatedRoute } from '@angular/router';
 import { AnswerComponent } from '../answer/answer.component';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AnswerGridComponent implements OnInit {
   answers?:Array<any>;
-
+  
   constructor(private answerService:AnswerService, private route:ActivatedRoute){}
   
   ngOnInit(): void {

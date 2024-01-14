@@ -12,13 +12,14 @@ mat-card {
     }
 
     .score-wrapper{
-        width: 100%;
+        width: 64px;
+        height: 48px;
         text-align: center;
         color: white;
-        
         p{
             font-size: 16px;
             margin-right: 8px; //because mat-icons have a native 8px margin-right property for unknown fucking reasons
+            margin-top: 12px;
         }
     }
 }

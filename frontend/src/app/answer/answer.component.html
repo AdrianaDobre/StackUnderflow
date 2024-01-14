@@ -1,12 +1,12 @@
 <mat-card>
     <mat-card-actions class="upvote-wrapper">
-        <button mat-button (click)="proceedUpvote()">
+        <button mat-button (click)="proceedUpvote()" *ngIf="isLoggedIn">
             <mat-icon fontIcon="arrow_upward"></mat-icon>
         </button>
         <div class = "score-wrapper">
             <p>{{answer.upVoteCount - answer.downVoteCount}}</p>
         </div>
-        <button mat-button (click)="proceedDownvote()">
+        <button mat-button (click)="proceedDownvote()" *ngIf="isLoggedIn">
             <mat-icon fontIcon="arrow_downward"></mat-icon>
         </button>
     </mat-card-actions>

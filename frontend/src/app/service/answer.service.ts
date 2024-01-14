@@ -18,7 +18,7 @@ export class AnswerService {
 
   retrieveAnswersByPostId(id:any) : Observable<any>{
     //temporary till permissions fixed
-    return this.http.get(this.apiurl + `/all?postId=${id}`, {headers:this.headers})
+    return this.http.get(this.apiurl + `/all?postId=${id}`)
   }
 
   upvoteAnswer(id:any){
