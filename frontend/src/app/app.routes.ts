@@ -6,6 +6,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { AddPostComponent } from './post/add-post/add-post.component';
 import { SuggestionComponent } from './suggestion/suggestion.component';
+import { HistoryComponent } from './history/history.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginFormComponent, pathMatch: 'full'},
@@ -13,7 +14,9 @@ export const routes: Routes = [
     {path: 'view/:id', component: PostComponent},
     {path: 'question', component: AddPostComponent},
     {path: '', component: HomeComponent},
-    {path: 'answer/:id', component: SuggestionComponent},
+    {path: 'answer/:id/suggest', component: SuggestionComponent},
+    {path: 'answer/:id/history', component: HistoryComponent},
+
     //this should always be last
     {path: '**', component: NotFoundComponent}
 ];

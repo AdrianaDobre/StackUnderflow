@@ -46,4 +46,27 @@ export class AnswerService {
   getAnswerById(id:any) : Observable<any>{
     return this.http.get(this.apiurl + `/${id}`);
   }
+
+  getSuggestionsForAnswer(id:any) : Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.get(this.apiurl + `/${id}/suggestions`, {headers:headers});
+  }
+
+  acceptSuggestion(id:any, suggestionId:any) : Observable<ResponseMessage>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    })
+
+    return this.http.put<ResponseMessage>(this.apiurl + `/${id}/accept/${suggestionId}`, null, {headers: headers})
+    .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
+  }
+
+  getHistoryForAnswer(id:any) : Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.get(this.apiurl + `/${id}/history`, {headers:headers});
+  }
 }

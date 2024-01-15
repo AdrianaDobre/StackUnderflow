@@ -1,0 +1,4 @@
+<app-answer [answer]="answer"></app-answer>
+<div *ngFor="let hist of (history)">
+    <app-answer [answer]="hist" [isHistory]="true"></app-answer>
+</div>
