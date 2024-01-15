@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AddAnswerComponent } from '../answer/add-answer/add-answer.component';
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-post',
@@ -29,7 +30,7 @@ export class PostComponent implements OnInit{
 
   isFullPost!:boolean;
 
-  constructor(private postService:PostService, private route:ActivatedRoute, private router:Router){ }
+  constructor(private postService:PostService, private route:ActivatedRoute, private router:Router, private authService:AuthService){ }
 
   ngOnInit(): void {
     if (this.route.snapshot.paramMap.get('id')) this.isFullPost = true;
@@ -58,5 +59,13 @@ export class PostComponent implements OnInit{
     console.log(id)
     this.router.navigateByUrl('/view/' + id)
     console.log(this.router.url)
+  }
+
+  getUserIdFromToken() { 
+    return this.authService.getUserIdFromToken()
+  }
+
+  isLoggedIn() {
+    return this.authService.isLoggedIn()
   }
 }
