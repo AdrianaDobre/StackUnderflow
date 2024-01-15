@@ -42,4 +42,8 @@ export class AnswerService {
     return this.http.post<ResponseMessage>(this.apiurl, answer, {headers: headers})
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
+
+  getAnswerById(id:any) : Observable<any>{
+    return this.http.get(this.apiurl + `/${id}`);
+  }
 }

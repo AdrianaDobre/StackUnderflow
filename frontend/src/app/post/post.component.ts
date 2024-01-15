@@ -56,9 +56,7 @@ export class PostComponent implements OnInit{
   }
 
   goToPost(id: string) {
-    console.log(id)
     this.router.navigateByUrl('/view/' + id)
-    console.log(this.router.url)
   }
 
   getUserIdFromToken() { 

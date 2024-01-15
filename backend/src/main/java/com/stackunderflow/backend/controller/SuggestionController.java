@@ -26,9 +26,9 @@ public class SuggestionController {
     private final SuggestionService suggestionService;
 
     @PreAuthorize("hasRole('USER')")
-    @PostMapping
-    void saveSuggestion(@RequestBody SaveSuggestionDTO saveSuggestionDTO, Principal principal){
-        suggestionService.saveSuggestion(saveSuggestionDTO,principal.getName());
+    @PostMapping("/")
+    ResponseEntity<Message> saveSuggestion(@RequestBody SaveSuggestionDTO saveSuggestionDTO, Principal principal){
+        return new ResponseEntity<>(suggestionService.saveSuggestion(saveSuggestionDTO,principal.getName()), HttpStatus.OK);
     }
 
     @GetMapping("/all")

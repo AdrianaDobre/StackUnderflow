@@ -7,6 +7,7 @@ import { AnswerService } from '../service/answer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../service/auth.service';
 import { PostService } from '../service/post.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-answer',
@@ -24,7 +25,7 @@ export class AnswerComponent implements OnInit {
 
   @Input() postUserId = '';
 
-  constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar, private postService:PostService) { }
+  constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar, private router:Router, private postService:PostService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
@@ -58,6 +59,10 @@ export class AnswerComponent implements OnInit {
 
   deleteVote(){
     this.answerService.deleteVote(this.answer.answerId).subscribe(r=>r);
+  }
+
+  goToAnswer(id: string) {
+    this.router.navigateByUrl('/answer/' + id);
   }
 
   getUserIdFromToken() { 

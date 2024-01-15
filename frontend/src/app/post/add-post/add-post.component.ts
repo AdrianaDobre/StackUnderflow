@@ -37,8 +37,6 @@ export class AddPostComponent {
         tags:this.topics
       }
 
-      console.log(post)
-
       this.postService.createPost(post).subscribe({
         next: (r) => {
           this.router.navigate([`view/${r.message}`]).then(()=>window.location.reload())
