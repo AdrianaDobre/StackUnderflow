@@ -66,7 +66,7 @@ export class AnswerComponent implements OnInit {
           })
         }
       });;
-}
+  }
   
   proceedUpvote(){
     this.answerService.upvoteAnswer(this.answer.answerId).subscribe({

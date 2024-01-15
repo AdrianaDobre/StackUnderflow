@@ -21,6 +21,14 @@ export class PostService {
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
 
+  editPost(id:any, post:any) : Observable<ResponseMessage>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.put<ResponseMessage>(this.apiurl + `/edit/${id}`, post, {headers: headers})
+    .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
+  }
+
   getPostById(id:any) : Observable<any>{
     return this.http.get(this.apiurl + `/${id}`)
   }

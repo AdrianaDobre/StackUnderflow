@@ -9,12 +9,13 @@ import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AddAnswerComponent } from '../answer/add-answer/add-answer.component';
 import { AuthService } from '../service/auth.service';
+import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, AnswerGridComponent, MatChipsModule, AddAnswerComponent],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, AnswerGridComponent, MatChipsModule, AddAnswerComponent, FormsModule],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
@@ -30,6 +31,9 @@ export class PostComponent implements OnInit{
   userId!:string;
 
   isFullPost!:boolean;
+
+  isEditing = false;
+  editedBody: string = '';
 
   constructor(private postService:PostService, private route:ActivatedRoute, private router:Router, private authService:AuthService, private _snackBar:MatSnackBar){ }
 
@@ -55,6 +59,35 @@ export class PostComponent implements OnInit{
           }
       })
   }
+
+  toggleEdit(){
+    if (!this.isEditing) {
+      this.editedBody = this.body;
+    }
+    this.isEditing = !this.isEditing;   
+  }
+
+  saveEdit() {
+    this.body = this.editedBody
+    const post = {
+      postId: this.route.snapshot.paramMap.get('id'),
+      body: this.body
+    }
+
+    this.isEditing = false;
+    this.postService.editPost(this.route.snapshot.paramMap.get('id'), post).subscribe({
+      next: (r) => {
+        this._snackBar.open(r.message, "Dismiss", {
+          duration:2000
+        })
+      },
+        error: (e) => {
+          this._snackBar.open(e.error.message, "Dismiss", {
+            duration:2000
+          })
+        }
+      });;
+  }  
 
   goToPost(id: string) {
     this.router.navigateByUrl('/view/' + id)
