@@ -26,6 +26,12 @@ Pentru a pune în evidență funcționalitățile și cerințele aplicației, am
 ![use_case](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/998dcc20-dbe6-4bde-8a83-1b57ed20664c)
 
 ### 2. Diagrama de clasă
+Fiecare clasă este reprezentată printr-un grafic cu 3 secțiuni verticale: numele clasei, atributele și operațiile. Atributele și operatiile ce au în față simbolul + sunt publice, iar cele ce au - sunt private. 
+
+De exemplu, clasa cu numele Topic are două atribute private: un id de tip Long și un nume de tip String. De asemenea, are și două operații publice: saveTopic care primește ca parametru un Topic și returnează un mesaj de succes/eroare și operația getAllTopics care nu are parametrii și returnează o listă cu toate topicurile.
+
+Relațiile dintre clase sunt de asociere și agregare. Între clasele Badge și User este o relație de asociere deoarece "Userul are Badge-uri" de cardinalitate 0..* și 0..* pentru că utilizatorul poate avea 0 sau mai multe badge-uri, iar fiecare badge poate fi asociat mai multor utilizatori sau niciunuia. În schimb între clasele Post și Comment este o relație de agregare deoarece "Postarea deține comentarii". Fiecare comentariu este dependent de postarea sa, de aceea cardinalitatea este 1, iar fiecare postare poate avea 0 sau mai multe comentarii (cardinalitate 0..*).
+
  ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/097bbc70-14cb-48e5-a2b7-bdd1a506be9b)
 
 ### 3. Diagrama de pachete
