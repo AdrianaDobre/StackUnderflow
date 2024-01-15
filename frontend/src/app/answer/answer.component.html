@@ -20,8 +20,8 @@
         </mat-card-content>
         <mat-card-actions *ngIf="!isSuggestion && !isHistory">
             <button [ngClass]="!isLoggedInFunc() ? 'button-hidden' : 'button-shown'" (click)="goToAnswer(answer.answerId)" mat-button (click)="goToAnswer(answer.answerId)">Suggest Edit</button>
-            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != answer.userId ? 'button-hidden' : 'button-shown'" mat-button>Delete</button>
-            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != postUserId ? 'button-hidden' : 'button-shown'" mat-button>Pick Best</button>
+            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != answer.userId ? 'button-hidden' : 'button-shown'" (click)="deleteAnswer()" mat-button>Delete</button>
+            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != postUserId ? 'button-hidden' : 'button-shown'" (click)="pickBestAnswer()" mat-button>Pick Best</button>
             <button mat-button (click)="goToHistory(answer.answerId)">History </button>
         </mat-card-actions>
         <mat-card-actions *ngIf="isSuggestion && !isHistory">

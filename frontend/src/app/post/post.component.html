@@ -1,21 +1,25 @@
-<mat-card (click)="goToPost(postId)" class="pl-3 mt-4">
+<mat-card class="pl-3 mt-4">
     <div class="header-content-wrapper">
-        <mat-card-header>
-        <mat-card-title>{{userName}}</mat-card-title>
-        <mat-card-subtitle>Posted {{createdDate | date: 'dd MMM'}} at {{createdDate | date: 'HH:mm'}}</mat-card-subtitle>
-        <mat-card-subtitle class="d-flex">
-            <mat-chip-set *ngFor="let tag of tags">
-                <mat-chip class="mr-2">{{tag}}</mat-chip>
-            </mat-chip-set>
-        </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="m-2 card-content">
-            <p> {{body}} </p>
-        </mat-card-content>
-        <mat-card-actions>
-            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Edit</button>
-            <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Delete</button>
-        </mat-card-actions>
+        <div (click)="goToPost(postId)">
+            <mat-card-header>
+                <mat-card-title>{{userName}}</mat-card-title>
+                <mat-card-subtitle>Posted {{createdDate | date: 'dd MMM'}} at {{createdDate | date: 'HH:mm'}}</mat-card-subtitle>
+                <mat-card-subtitle class="d-flex">
+                    <mat-chip-set *ngFor="let tag of tags">
+                        <mat-chip class="mr-2">{{tag}}</mat-chip>
+                    </mat-chip-set>
+                </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="m-2 card-content">
+                    <p> {{body}} </p>
+                </mat-card-content>
+        </div>
+        <div>
+            <mat-card-actions>
+                <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" mat-button>Edit</button>
+                <button [ngClass]="!isLoggedIn() || getUserIdFromToken() != userId ? 'button-hidden' : 'button-shown'" (click)="deletePost()" mat-button>Delete</button>
+            </mat-card-actions>
+        </div>
     </div>
 </mat-card>
 

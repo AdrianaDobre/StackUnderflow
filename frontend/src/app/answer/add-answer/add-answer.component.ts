@@ -30,11 +30,8 @@ export class AddAnswerComponent {
         body: this.answer.value
       }
 
-      console.log(comment)
-
       this.answerService.saveAnswer(comment).subscribe({
         next: (r) => {
-          console.log(r)
           this._snackBar.open(r.message, "Dismiss", {
             duration:2000
           })

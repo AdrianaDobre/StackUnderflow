@@ -35,11 +35,7 @@ export class AnswerService {
   }
 
   saveAnswer(answer:any) : Observable<ResponseMessage>{
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    })
-
-    return this.http.post<ResponseMessage>(this.apiurl, answer, {headers: headers})
+    return this.http.post<ResponseMessage>(this.apiurl, answer, {headers: this.headers})
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
 
@@ -48,25 +44,20 @@ export class AnswerService {
   }
 
   getSuggestionsForAnswer(id:any) : Observable<any>{
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    })
-    return this.http.get(this.apiurl + `/${id}/suggestions`, {headers:headers});
+    return this.http.get(this.apiurl + `/${id}/suggestions`, {headers: this.headers});
   }
 
   acceptSuggestion(id:any, suggestionId:any) : Observable<ResponseMessage>{
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    })
-
-    return this.http.put<ResponseMessage>(this.apiurl + `/${id}/accept/${suggestionId}`, null, {headers: headers})
+    return this.http.put<ResponseMessage>(this.apiurl + `/${id}/accept/${suggestionId}`, null, {headers: this.headers})
     .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
 
   getHistoryForAnswer(id:any) : Observable<any>{
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    })
-    return this.http.get(this.apiurl + `/${id}/history`, {headers:headers});
+    return this.http.get(this.apiurl + `/${id}/history`, {headers: this.headers});
+  }
+
+  deleteAnswer(answerId: string) : Observable<ResponseMessage>{
+    return this.http.delete<ResponseMessage>(this.apiurl + '/delete/' + answerId, {headers: this.headers})
+    .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
   }
 }

@@ -104,4 +104,38 @@ export class AnswerComponent implements OnInit {
     this.router.navigateByUrl('/answer/' + id + '/history');
   }
 
+  deleteAnswer() {
+    this.answerService.deleteAnswer(this.answer.answerId).subscribe({
+      next: (r) => {
+        this._snackBar.open(r.message, "Dismiss", {
+          duration:2000
+        })
+        setTimeout(function() {
+          window.location.reload()
+      }, 2000);
+      }
+    });
+  }
+
+  pickBestAnswer() {
+    const postId = this.route.snapshot.paramMap.get('id') ?? '';
+    const answerId = this.answer.answerId;
+    this.postService.pickBest(postId, answerId).subscribe({
+      next: (r) => {
+        console.log(r)
+        this._snackBar.open(r.message, "Dismiss", {
+          duration:2000
+        })
+        setTimeout(function() {
+          window.location.reload()
+      }, 2000);
+      },
+      error: (e) => {
+        this._snackBar.open(e.error.message, "Dismiss", {
+          duration:2000
+        })
+      }
+    });
+  }
+
 }

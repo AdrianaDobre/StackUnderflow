@@ -9,6 +9,7 @@ import { AnswerGridComponent } from '../answer-grid/answer-grid.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { AddAnswerComponent } from '../answer/add-answer/add-answer.component';
 import { AuthService } from '../service/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-post',
@@ -30,7 +31,7 @@ export class PostComponent implements OnInit{
 
   isFullPost!:boolean;
 
-  constructor(private postService:PostService, private route:ActivatedRoute, private router:Router, private authService:AuthService){ }
+  constructor(private postService:PostService, private route:ActivatedRoute, private router:Router, private authService:AuthService, private _snackBar:MatSnackBar){ }
 
   ngOnInit(): void {
     if (this.route.snapshot.paramMap.get('id')) this.isFullPost = true;
@@ -57,6 +58,19 @@ export class PostComponent implements OnInit{
 
   goToPost(id: string) {
     this.router.navigateByUrl('/view/' + id)
+  }
+
+  deletePost() {
+    this.postService.deletePost(this.postId).subscribe({
+      next: (r) => {
+        this._snackBar.open(r.message, "Dismiss", {
+          duration:2000
+        })
+        setTimeout(function() {
+          window.location.reload()
+      }, 2000);
+      }
+})
   }
 
   getUserIdFromToken() { 
