@@ -171,6 +171,8 @@ public class CommentServiceImpl implements CommentService {
         suggestion.setAccepted(true);
         suggestion.setAcceptedOnDate(LocalDateTime.now());
         suggestionRepository.save(suggestion);
+        comment.setText(suggestion.getText());
+        commentRepository.save(comment);
         Users user = suggestion.getUser();
         user.setPoints(user.getPoints() + 5.d);
         userRepository.save(user);
