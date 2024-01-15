@@ -35,6 +35,8 @@ Relațiile dintre clase sunt de asociere și agregare. Între clasele Badge și 
  ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/097bbc70-14cb-48e5-a2b7-bdd1a506be9b)
 
 ### 3. Diagrama de pachete
+Pachetele oferă o modalitate de a grupa elemente și ajută la stabilirea dependențelor dintre componentele aplicației. O relație de tip Access într-o astfel de diagramă indică utilizarea elementelor precum clase, interfețe dintr-un pachet sau depindența directă de elemente dintr-un alt pachet. O relație de tip Import într-o astfel de diagramă sugerează că elementele dintr-un pachet se bazează pe tipuri (clase, interfețe etc.) definite într-un alt pachet fără utilizare directă sau dependență de funcționalitățile lor. De exemplu, în diagrama de mai jos, întrebările depind de răspunsuri, iar această dependență ar putea fi considerată o formă de „acces”, deoarece întrebările se bazează pe elementele oferite de răspunsuri.
+
 ![package_diagram](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/f3b9651b-edf0-4a4d-aec2-38678413e1bb)
 
 ### 4. Diagrama de deployment
