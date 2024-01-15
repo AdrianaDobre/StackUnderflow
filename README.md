@@ -48,7 +48,19 @@ O variantă detaliată a diagramei Use Case se poate vedea aici (DE ADAUGAT LINK
 
 * #### Repository Pattern
 
-Am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul logic de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil.
+Am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul logic de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil. Am utilizat Spring Data care permite generarea repositories pentru entitățile din baza de date. Acestea pot genera cele mai comune operațiuni de creare, citire, actualizare și ștergere (CRUD) și interogări personalizate. Un exemplu se poate observa în imaginea de mai jos.
+
+![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/df6a6b2a-aa23-42e9-8037-0b7925c6a41d)
+
+* #### Data Transfer Object Pattern
+  
+DTO este un design pattern bine-cunoscut și adesea folosit. Un DTO este o clasă Java simplă care ajută la rafinarea unui obiect pentru a fi transferat în cel mai eficient și sigur mod din backend către client (în cazul nostru frontend). Totodată, ajută la minimizarea dependințelor. 
+
+![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/9149012f-031b-4f0b-8e65-9ca152160c0f)
+
+* #### Client Server Pattern
+  
+Modelul client-server este o arhitectură de calcul distribuită care împarte aplicațiile software în două roluri distincte: client și server. Acest model arhitectural permite separarea preocupărilor între interfața cu utilizatorul (client) și procesarea sau stocarea datelor (server). Modelul client-server este o structură care distribuie sarcini între furnizorii de resurse sau servicii numite servere și elementele care solicită resurse sau servicii, numite clienți.
 
 
 
