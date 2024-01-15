@@ -29,7 +29,7 @@
             <button *ngIf="isEditing" mat-button (click)="saveEdit()">Save</button>
             <button mat-button (click)="goToHistory(answer.answerId)">History </button>
         </mat-card-actions>
-        <mat-card-actions *ngIf="isSuggestion && !isHistory">
+        <mat-card-actions *ngIf="isSuggestion && !isHistory && getUserIdFromToken() != answer.userId">
             <button mat-button (click)="acceptSuggestion()">Accept Suggestion</button>
         </mat-card-actions>
     </div>
