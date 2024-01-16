@@ -98,7 +98,7 @@ public class PostServiceImpl implements PostService {
                 .body(post.getDescription())
                 .tags(topics)
                 .votesByLoggedUser(votes.isEmpty() ? null : votes.stream().map(this::mapEntityToVoteDTO).collect(Collectors.toList()))
-                .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)).build();
+                .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)
                 .createdDate(post.getDate())
                 .userName(post.getUser().getUsername())
                 .userId(post.getUser().getId())
