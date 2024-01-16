@@ -39,10 +39,9 @@ Pachetele oferă o modalitate de a grupa elemente și ajută la stabilirea depen
 
 ![package_diagram](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/f3b9651b-edf0-4a4d-aec2-38678413e1bb)
 
-Diagrama de pachete de mai jos surprinde interacțiunea și dependența dintre pachetele de pe partea de backend. Serviciile, repositories, DTO-urile, modelele, excepțiile sunt importate în clasele specifice. De exemplu, controller-ul de întrebări importă DTO-ul întrebării și în acelasi timp serviciul unde se află metodele care ajută la gestionarea întrebărilor. 
+Diagrama de pachete de mai jos surprinde interacțiunea și dependența dintre pachetele de pe partea de backend. Serviciile, repositories, DTO-urile, modelele, excepțiile sunt importate în clasele specifice. De exemplu, controller-ul de întrebări importă DTO-ul întrebării și depinde de serviciul unde se află metodele care ajută la gestionarea întrebărilor. 
 
-![package_diagram_ be drawio](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/0a66f714-5322-4917-8bd9-289812de1aaf)
-
+![package_diagram_be_new](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/8819c528-1fe3-4336-81d6-1ee8a6cce196)
 
 ### 4. Diagrama de deployment
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/0ce07456-178a-4e4c-ba5a-fb9458dd8ab5)
