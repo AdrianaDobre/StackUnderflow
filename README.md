@@ -48,7 +48,7 @@ Diagrama de pachete de mai jos surprinde interacțiunea și dependența dintre p
 
 ### 5. Diagrama Use Case (Contract API)
 
-O variantă detaliată a diagramei Use Case se poate vedea aici (DE ADAUGAT LINK)
+O variantă detaliată a diagramei Use Case se poate vedea [aici](https://docs.google.com/document/d/1G2NawDg5F2sq9sPSba75LNVvtYO0cnom16gbhHdsmrA/edit?usp=sharing) 
 
 ### 6. Diagrama de activitate pentru gestionarea adăugării de sugestii
 
@@ -61,6 +61,11 @@ Diagrama de activitate surprinde fluxul adăugării de sugestii. Utilizatorul ad
 
 ### 8. Diagrama de stare pentru editarea unui comentariu
 ![StateMachineDiagramForEditComment](https://github.com/AdrianaDobre/StackUnderflow/assets/79691379/73d65b2e-8419-417a-a387-d89252d1f083)
+
+### 9. Diagrama de componente pentru autentificare
+![image](diagrams/Auth.drawio.png)
+
+Component diagram for the auth flow, depicting most Spring provided components required for validating a JWT Token, creating the AuthToken and putting the AuthToken in the context of the request.
 
 ## Design Patterns
 
