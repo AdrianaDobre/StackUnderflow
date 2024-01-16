@@ -39,6 +39,11 @@ Pachetele oferă o modalitate de a grupa elemente și ajută la stabilirea depen
 
 ![package_diagram](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/f3b9651b-edf0-4a4d-aec2-38678413e1bb)
 
+Diagrama de pachete de mai jos surprinde interacțiunea și dependența dintre pachetele de pe partea de backend. Serviciile, repositories, DTO-urile, modelele, excepțiile sunt importate în clasele specifice. De exemplu, controller-ul de întrebări importă DTO-ul întrebării și în acelasi timp serviciul unde se află metodele care ajută la gestionarea întrebărilor. 
+
+![package_diagram_ be drawio](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/0a66f714-5322-4917-8bd9-289812de1aaf)
+
+
 ### 4. Diagrama de deployment
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/0ce07456-178a-4e4c-ba5a-fb9458dd8ab5)
 
@@ -47,6 +52,9 @@ Pachetele oferă o modalitate de a grupa elemente și ajută la stabilirea depen
 O variantă detaliată a diagramei Use Case se poate vedea aici (DE ADAUGAT LINK)
 
 ### 6. Diagrama de activitate pentru gestionarea adăugării de sugestii
+
+Diagrama de activitate surprinde fluxul adăugării de sugestii. Utilizatorul adaugă o sugestie, iar mai apoi prin nodurile de decizie sunt reprenzentate cele două flow-uri: sugestia este acceptată de utilizatorul care a adăugat comentariul inițial sau este refuzată. Acceptarea sugestiei duce la schimbarea comentariului inițial și creșterea numărului de puncte a utilizatorului, actiunți pe care le-am indicat cu ajutorul nodului de join. 
+
 ![Activity Diagram For Handling Suggestions](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/31819dbb-52c6-49a9-9992-67c3eb11972e)
 
 ### 7. Diagramă de secvență
