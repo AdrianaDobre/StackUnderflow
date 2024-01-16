@@ -44,6 +44,9 @@ Diagrama de pachete de mai jos surprinde interacțiunea și dependența dintre p
 ![package_diagram_be_new](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/8819c528-1fe3-4336-81d6-1ee8a6cce196)
 
 ### 4. Diagrama de deployment
+
+Diagrama de deployment surprinde componentele aplicației și legăturile dintre acestea. Componentele pot fi lansate pe același dispozitiv sau pe mai multe, dacă traficul este permis în rețea.
+
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/0ce07456-178a-4e4c-ba5a-fb9458dd8ab5)
 
 ### 5. Diagrama Use Case (Contract API)
@@ -60,6 +63,9 @@ Diagrama de activitate surprinde fluxul adăugării de sugestii. Utilizatorul ad
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/83ec5abb-10c2-4d18-8226-6a99f9bdfc07)
 
 ### 8. Diagrama de stare pentru editarea unui comentariu
+
+Această diagramă surprinde stările și evenimentele prin care aplicația trece în momentul în care un utilizator dorește să editeze un comentariu.
+
 ![StateMachineDiagramForEditComment](https://github.com/AdrianaDobre/StackUnderflow/assets/79691379/73d65b2e-8419-417a-a387-d89252d1f083)
 
 ### 9. Diagrama de componente pentru autentificare
