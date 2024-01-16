@@ -76,7 +76,8 @@ Această diagramă surprinde stările și evenimentele prin care aplicația trec
 ![StateMachineDiagramForEditComment](https://github.com/AdrianaDobre/StackUnderflow/assets/79691379/73d65b2e-8419-417a-a387-d89252d1f083)
 
 ### 10. Diagrama de componente pentru autentificare
-![image](diagrams/Auth.drawio.png)
+
+![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79320751/598aeb6e-2912-4b44-b3d6-a3927407d60c)
 
 ### 11. Diagrama de componente pentru proiectul de frontend
 Sunt ilustrate componentele principale ale aplicatiei Angular de frontend si modul in care acestea formeaza dependintele pentru fiecare pagina accesata de utilizator. In partea de jos a diagramei sunt reprezentate componentele ce reprezinta pagini sau rute in aplicatia web, la mijloc se afla componentele mai mici ale proiectului iar in partea de sus sunt desenate clasele typescript ce reprezinta serviciile din frontend ce fac apelurile catre backend.
