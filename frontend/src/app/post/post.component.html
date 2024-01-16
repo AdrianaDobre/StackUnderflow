@@ -2,7 +2,8 @@
     <div class="header-content-wrapper">
         <div (click)="goToPost(postId)">
             <mat-card-header>
-                <mat-card-title>{{userName}}</mat-card-title>
+                <mat-card-title>{{title}}</mat-card-title>
+                <mat-card-subtitle>Posted by {{userName}}</mat-card-subtitle>
                 <mat-card-subtitle>Posted {{createdDate | date: 'dd MMM'}} at {{createdDate | date: 'HH:mm'}}</mat-card-subtitle>
                 <mat-card-subtitle class="d-flex">
                     <mat-chip-set *ngFor="let tag of tags">
