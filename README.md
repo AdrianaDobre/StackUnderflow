@@ -17,7 +17,8 @@ Partea de backend a proiectului a fost implementată folosind limbajul de progra
 
 O centralizare a diagramelor din cadrul echipei, cât și contribuția fiecărui membru se pot găsi în tabelul de mai jos:
 
-DE ADAUGAT POZA
+<img width="850" alt="image" src="https://github.com/AdrianaDobre/StackUnderflow/assets/79320751/f55d3fb3-b0c3-4496-acfe-0d62936ba767">
+
 
 ### 1. Diagrama generală (USE CASE)
 
