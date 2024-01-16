@@ -51,7 +51,7 @@ Diagrama de deployment surprinde componentele aplicației și legăturile dintre
 
 ### 5. Diagrama Use Case (Contract API)
 
-O variantă detaliată a diagramei Use Case se poate vedea [aici](https://docs.google.com/document/d/1G2NawDg5F2sq9sPSba75LNVvtYO0cnom16gbhHdsmrA/edit?usp=sharing) 
+O variantă detaliată a diagramei Use Case se poate vedea [aici](https://github.com/AdrianaDobre/StackUnderflow/blob/main/diagrams/Use%20Case%20Diagram%20(API%20Contract).pdf) 
 
 ### 6. Diagrama de activitate pentru gestionarea adăugării de sugestii
 
