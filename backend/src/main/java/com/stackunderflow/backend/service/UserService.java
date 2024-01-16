@@ -12,4 +12,5 @@ public interface UserService {
     UserDTO getUserById(Long id);
     Message editUser(EditUserDTO user, Long id, String email);
     Message deleteUser(Long id, String email);
+    String getUserIdByEmail(String email);
 }

@@ -1,6 +1,8 @@
 package com.stackunderflow.backend.security.jwt;
 
 import com.stackunderflow.backend.DTOS.TokenDTO;
+import com.stackunderflow.backend.repository.UserRepository;
+import com.stackunderflow.backend.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -8,6 +10,8 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -19,6 +23,8 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JWTService {
+    //daca injectez UserService am dependinta circulara
+    final UserRepository userRepository;
     @Value("${spring.jwt.secret}")
     private String JWT_SECRET;
 
@@ -32,6 +38,8 @@ public class JWTService {
 
     public TokenDTO tokenCreator(Map<String, Object> claims, String userName) {
         long currentDate = System.currentTimeMillis();
+        claims.put("id", userRepository.findByEmail(userName).orElseThrow(() -> new UsernameNotFoundException("Not found")).getId());
+        claims.put("username", userRepository.findByEmail(userName).orElseThrow(() -> new UsernameNotFoundException("Not found")).getUsername());
         String token = Jwts.builder()
                 .claims(claims)
                 .subject(userName)

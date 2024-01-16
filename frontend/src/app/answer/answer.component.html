@@ -1,0 +1,36 @@
+<mat-card>
+    <mat-card-actions class="upvote-wrapper" *ngIf="!isSuggestion && !isHistory">
+        <button mat-button (click)="proceedUpvote()" *ngIf="isLoggedIn">
+            <mat-icon fontIcon="arrow_upward"></mat-icon>
+        </button>
+        <div class = "score-wrapper">
+            <p>{{answer.upVoteCount - answer.downVoteCount}}</p>
+        </div>
+        <button mat-button (click)="proceedDownvote()" *ngIf="isLoggedIn">
+            <mat-icon fontIcon="arrow_downward"></mat-icon>
+        </button>
+    </mat-card-actions>
+    <div class="header-content-wrapper">
+        <mat-card-header>
+        <mat-card-title>{{answer.username}}</mat-card-title>
+        <mat-card-subtitle *ngIf="!isSuggestion && !isHistory">Posted {{answer.createdDate | date: 'dd MMM'}} at {{answer.createdDate | date: 'HH:mm'}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mt-2 card-content">
+            <div *ngIf="!isEditing">
+                <p> {{answer.body}} </p>
+            </div>
+            <textarea *ngIf="isEditing" [(ngModel)]="editedBody"></textarea>
+        </mat-card-content>
+        <mat-card-actions *ngIf="!isSuggestion && !isHistory">
+            <button [ngClass]="!isLoggedInFunc() ? 'button-hidden' : 'button-shown'" (click)="goToAnswer(answer.answerId)" mat-button (click)="goToAnswer(answer.answerId)">Suggest Edit</button>
+            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != answer.userId ? 'button-hidden' : 'button-shown'" (click)="deleteAnswer()" mat-button>Delete</button>
+            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != postUserId ? 'button-hidden' : 'button-shown'" (click)="pickBestAnswer()" mat-button>Pick Best</button>
+            <button [ngClass]="!isLoggedInFunc() || getUserIdFromToken() != answer.userId ? 'button-hidden' : 'button-shown'" (click)="toggleEdit()" mat-button>{{ isEditing ? 'Cancel' : 'Edit' }}</button>
+            <button *ngIf="isEditing" mat-button (click)="saveEdit()">Save</button>
+            <button mat-button (click)="goToHistory(answer.answerId)">History </button>
+        </mat-card-actions>
+        <mat-card-actions *ngIf="isSuggestion && !isHistory && getUserIdFromToken() != answer.userId">
+            <button mat-button (click)="acceptSuggestion()">Accept Suggestion</button>
+        </mat-card-actions>
+    </div>
+</mat-card>

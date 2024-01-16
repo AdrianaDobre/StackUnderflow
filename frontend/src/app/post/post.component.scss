@@ -1,0 +1,40 @@
+mat-card {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: gray;
+    width: 70vw;
+
+    .upvote-wrapper{
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+    }
+
+    .score-wrapper{
+        width: 100%;
+        text-align: center;
+        color: white;
+        
+        p{
+            font-size: 16px;
+            margin-right: 8px; //because mat-icons have a native 8px margin-right property for unknown fucking reasons
+        }
+    }
+}
+
+.card-content {
+    color: white;
+}
+
+.button-shown{
+    display:flex;
+}
+
+.button-hidden{
+    display:none;
+}
+
+.header-content-wrapper{
+    width: 70vw;
+}

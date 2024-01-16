@@ -1,0 +1,5 @@
+<app-answer [answer]="answer"></app-answer>
+<app-add-suggestion [answerText]="answer.body" [answerId]="answer.answerId"></app-add-suggestion>
+<div *ngFor="let suggestion of (suggestions)">
+    <app-answer [answer]="suggestion" [isSuggestion]="true"></app-answer>
+</div>

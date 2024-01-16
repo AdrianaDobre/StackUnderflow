@@ -1,0 +1,30 @@
+<div class="register-form">
+    <div class="text">Register</div>
+    <mat-form-field>
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="email@domain.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Enter your username</mat-label>
+        <input matInput placeholder="username" [formControl]="username" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Enter your password</mat-label>
+        <input matInput [formControl]="password" required [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirm your password</mat-label>
+        <input matInput [formControl]="confirmPassword" required [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <div mx-2 class="buttons">
+        <button mat-raised-button id="login-button" routerLink="/login">Login</button>
+        <button mat-raised-button extended color="primary" id="register-button" (click)="attemptRegister()">Register</button>
+    </div>
+</div>

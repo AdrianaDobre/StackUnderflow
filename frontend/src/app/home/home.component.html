@@ -1,0 +1,9 @@
+<div *ngFor="let postId of postIds">
+    <app-post [postId]="postId"></app-post>
+  </div>
+
+<div class="m-5 bottom-right">
+  <button (click)="goToQuestionCreate()" matTooltip="Ask a question" mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

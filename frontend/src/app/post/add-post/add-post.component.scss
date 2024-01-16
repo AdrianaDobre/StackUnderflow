@@ -1,0 +1,19 @@
+mat-card {
+    margin: auto;
+    background-color: gray;
+    width: 1100px;
+
+    mat-card-content{
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    app-select-topic{
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+}
+
+

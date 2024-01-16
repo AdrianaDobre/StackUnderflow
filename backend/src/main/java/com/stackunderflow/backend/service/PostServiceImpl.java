@@ -56,7 +56,7 @@ public class PostServiceImpl implements PostService {
             UserXBadge userXBadge = new UserXBadge(ubId, LocalDateTime.now());
             userXBadgeRepository.save(userXBadge);
         }
-        return new Message("Post created successfully");
+        return new Message(newPost.getId().toString());
     }
 
     @Override
@@ -99,6 +99,10 @@ public class PostServiceImpl implements PostService {
                 .tags(topics)
                 .votesByLoggedUser(votes.isEmpty() ? null : votes.stream().map(this::mapEntityToVoteDTO).collect(Collectors.toList()))
                 .bestAnswer(bestAnswers.isEmpty() ? null : bestAnswers.get(0)).build();
+                .createdDate(post.getDate())
+                .userName(post.getUser().getUsername())
+                .userId(post.getUser().getId())
+                .build();
     }
 
     private VoteDTO mapEntityToVoteDTO(Vote vote) {
