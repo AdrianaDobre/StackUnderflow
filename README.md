@@ -65,6 +65,8 @@ Diagrama de mai jos reflectă fluxul realizat pentru aprecierea răspunsurilor o
 ![Activity Diagram For Answer Voting](https://github.com/AdrianaDobre/StackUnderflow/assets/79320751/9778740c-6655-4c7a-920d-e55bac874d3f)
 
 ### 8. Diagramă de secvență
+Este prezentat un flow de baza al aplicatiei ce cuprinde urmatorii pasi: adresarea unei intrebari de catre un utilizator, postarea unui raspuns de catre alt utilizator, alegerea celui mai bun raspuns de catre owner-ul intrebari si primirea de puncte sau badge de catre utilizatorul ce a postat raspunsul castigator. Diagrama prezinta interactiunea dintre componentele principale ale aplicatiei pentru aceste actiuni.
+
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/83ec5abb-10c2-4d18-8226-6a99f9bdfc07)
 
 ### 9. Diagrama de stare pentru editarea unui comentariu
@@ -75,6 +77,12 @@ Această diagramă surprinde stările și evenimentele prin care aplicația trec
 
 ### 10. Diagrama de componente pentru autentificare
 ![image](diagrams/Auth.drawio.png)
+
+### 11. Diagrama de componente pentru proiectul de frontend
+Sunt ilustrate componentele principale ale aplicatiei Angular de frontend si modul in care acestea formeaza dependintele pentru fiecare pagina accesata de utilizator. In partea de jos a diagramei sunt reprezentate componentele ce reprezinta pagini sau rute in aplicatia web, la mijloc se afla componentele mai mici ale proiectului iar in partea de sus sunt desenate clasele typescript ce reprezinta serviciile din frontend ce fac apelurile catre backend.
+
+![frontend component diagram-2](https://github.com/AdrianaDobre/StackUnderflow/assets/79518275/73ff278d-a345-4f3f-9e11-d86684ed50a7)
+
 
 Component diagram for the auth flow, depicting most Spring provided components required for validating a JWT Token, creating the AuthToken and putting the AuthToken in the context of the request.
 
