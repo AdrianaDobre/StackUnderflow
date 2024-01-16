@@ -59,6 +59,9 @@ Diagrama de activitate surprinde fluxul adăugării de sugestii. Utilizatorul ad
 ### 7. Diagramă de secvență
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/83ec5abb-10c2-4d18-8226-6a99f9bdfc07)
 
+### 8. Diagrama de stare pentru editarea unui comentariu
+![StateMachineDiagramForEditComment](https://github.com/AdrianaDobre/StackUnderflow/assets/79691379/73d65b2e-8419-417a-a387-d89252d1f083)
+
 ## Design Patterns
 
 * #### Repository Pattern
