@@ -51,7 +51,7 @@ Diagrama de deployment surprinde componentele aplicației și legăturile dintre
 
 ### 5. Diagrama Use Case (Contract API)
 
-O variantă detaliată a diagramei Use Case se poate vedea [aici](https://docs.google.com/document/d/1G2NawDg5F2sq9sPSba75LNVvtYO0cnom16gbhHdsmrA/edit?usp=sharing) 
+O variantă detaliată a diagramei Use Case se poate vedea [aici](https://github.com/AdrianaDobre/StackUnderflow/blob/main/diagrams/Use%20Case%20Diagram%20(API%20Contract).pdf) 
 
 ### 6. Diagrama de activitate pentru gestionarea adăugării de sugestii
 
@@ -59,16 +59,21 @@ Diagrama de activitate surprinde fluxul adăugării de sugestii. Utilizatorul ad
 
 ![Activity Diagram For Handling Suggestions](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/31819dbb-52c6-49a9-9992-67c3eb11972e)
 
-### 7. Diagramă de secvență
+### 7. Diagrama de activitate pentru aprecierea raspunsurilor
+Diagrama de mai jos reflectă fluxul realizat pentru aprecierea răspunsurilor oferite unei întrebări. Fluxul se separă în funcție de tipul votului: upvote sau downvote, urmând ca apoi să se separe fiecare în alte trei fluxuri în funcție de cazul prezent. Dacă votul este upvote, există următoarele cazuri: dacă postarea este apreciată deja de către utilizator acțiunea se termină, dacă utilizatorul a dat dislike răspunsului, acesta se șterge și se continuă fluxul ca pe varianta în care nu a fost oferit un vot anterior. Se adaugă noul vot și crește numărul de puncte ale utilizatorului, iar apoi acțiunea se termină. În cazul în care votul este downvote, există din nou trei cazuri posibile: dacă votul există deja acțiunea se termină, dacă este apreciată se șterge votul anterior și se scad punctele uttilizatorului, fluxul urmând apoi să corespundă celui îm care nu a fost înregistrat anterior un vot. Se adaugă downvot-ul și se încheie acțiunea.
+
+![Activity Diagram For Answer Voting](https://github.com/AdrianaDobre/StackUnderflow/assets/79320751/9778740c-6655-4c7a-920d-e55bac874d3f)
+
+### 8. Diagramă de secvență
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/83ec5abb-10c2-4d18-8226-6a99f9bdfc07)
 
-### 8. Diagrama de stare pentru editarea unui comentariu
+### 9. Diagrama de stare pentru editarea unui comentariu
 
 Această diagramă surprinde stările și evenimentele prin care aplicația trece în momentul în care un utilizator dorește să editeze un comentariu.
 
 ![StateMachineDiagramForEditComment](https://github.com/AdrianaDobre/StackUnderflow/assets/79691379/73d65b2e-8419-417a-a387-d89252d1f083)
 
-### 9. Diagrama de componente pentru autentificare
+### 10. Diagrama de componente pentru autentificare
 ![image](diagrams/Auth.drawio.png)
 
 Component diagram for the auth flow, depicting most Spring provided components required for validating a JWT Token, creating the AuthToken and putting the AuthToken in the context of the request.
