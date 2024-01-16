@@ -17,6 +17,14 @@ export class AnswerService {
     Authorization: `Bearer ${localStorage.getItem('token')}`
   })
 
+  editAnswer(id:any, answer:any) : Observable<ResponseMessage>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.post<ResponseMessage>(this.apiurl + `/edit/${id}`, answer, {headers: headers})
+    .pipe(map((resp:ResponseMessage)=>({  message:resp.message })))
+  }
+
   retrieveAnswersByPostId(id:any) : Observable<any>{
     //temporary till permissions fixed
     return this.http.get(this.apiurl + `/all?postId=${id}`)

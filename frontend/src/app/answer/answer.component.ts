@@ -8,11 +8,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../service/auth.service';
 import { PostService } from '../service/post.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-answer',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule, CommonModule, FormsModule],
   templateUrl: './answer.component.html',
   styleUrl: './answer.component.scss'
 })
@@ -29,10 +30,42 @@ export class AnswerComponent implements OnInit {
 
   @Input() postUserId = '';
 
+  isEditing = false;
+  editedBody: string = '';
+
   constructor(private answerService:AnswerService, private authService:AuthService, private _snackBar:MatSnackBar, private router:Router, private postService:PostService, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
+  }
+
+  toggleEdit(){
+    if (!this.isEditing) {
+      this.editedBody = this.answer.body;
+    }
+    this.isEditing = !this.isEditing;   
+  }
+
+  saveEdit() {
+    this.answer.body = this.editedBody
+    const comment = {
+      postId: this.route.snapshot.paramMap.get('id'),
+      body: this.answer.body
+    }
+
+    this.isEditing = false;
+    this.answerService.editAnswer(this.answer.answerId, comment).subscribe({
+      next: (r) => {
+        this._snackBar.open(r.message, "Dismiss", {
+          duration:2000
+        })
+      },
+        error: (e) => {
+          this._snackBar.open(e.error.message, "Dismiss", {
+            duration:2000
+          })
+        }
+      });;
   }
   
   proceedUpvote(){
