@@ -21,7 +21,7 @@ public class PostDTO {
     private String body;
     private List<String> tags;
     private Long bestAnswer;
-    private List<Vote> votesByLoggedUser;
+    private List<VoteDTO> votesByLoggedUser;
     private LocalDateTime createdDate;
     private String userName;
     private Long userId;
