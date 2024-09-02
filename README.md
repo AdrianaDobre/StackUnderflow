@@ -104,9 +104,12 @@ DTO este un design pattern bine-cunoscut și adesea folosit. Un DTO este o clas�
 
 * #### Client Server Pattern
   
-Modelul client-server este o arhitectură de calcul distribuită care împarte aplicațiile software în două roluri distincte: client și server. Acest model arhitectural permite separarea preocupărilor între interfața cu utilizatorul (client) și procesarea sau stocarea datelor (server). Modelul client-server este o structură care distribuie sarcini între furnizorii de resurse sau servicii numite servere și elementele care solicită resurse sau servicii, numite clienți.
+Modelul Client-Server este o arhitectură de calcul distribuită care împarte aplicațiile software în două roluri distincte: client și server. Acest model arhitectural permite separarea preocupărilor între interfața cu utilizatorul (client) și procesarea sau stocarea datelor (server). Modelul Client-Server este o structură care distribuie sarcini între furnizorii de resurse sau servicii numite servere și elementele care solicită resurse sau servicii, numite clienți.
 
+În mod obișnuit, componenta client nu partajează resursele sale, ci solicită diverse date și servicii de la server. Cele două componente sunt conectate prin intermediul unor conectori de tip request-response. Comunicarea între ele este posibilă prin utilizarea unui limbaj comun și respectarea unor reguli de bază stabilite într-un protocol de comunicație. Atunci când se transmit informații sensibile, este necesară criptarea pentru a asigura securitatea comunicării între client și server.
 
+*Principalul avantaj* al utilizării modelului Client-Server constă în centralizarea datelor cu același scop într-un singur loc, ceea ce oferă un grad ridicat de scalabilitate, organizare și eficiență. Întreținerea sistemului este facilitată, deoarece componentele server și client pot fi modificate și actualizate separat. Totuși, acest model prezintă și unele *vulnerabilități*, cum ar fi expunerea la atacuri de tip Phishing, Man in the Middle și Denial of Service. De asemenea, în cazul în care serverul devine indisponibil, utilizatorii vor fi deconectați și nu vor putea accesa aplicația.
 
+![client-server drawio](https://github.com/user-attachments/assets/82abf63c-193d-4337-9b9f-725d964cc987)
 
 
