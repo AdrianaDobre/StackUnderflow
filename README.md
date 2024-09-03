@@ -90,11 +90,15 @@ Component diagram for the auth flow, depicting most Spring provided components r
 
 ## Design Patterns
 
-* #### Repository Pattern
+* #### Client Server Pattern
+  
+Modelul Client-Server este o arhitectură de calcul distribuită care împarte aplicațiile software în două roluri distincte: client și server. Acest model arhitectural permite separarea preocupărilor între interfața cu utilizatorul (client) și procesarea sau stocarea datelor (server). Modelul Client-Server este o structură care distribuie sarcini între furnizorii de resurse sau servicii numite servere și elementele care solicită resurse sau servicii, numite clienți.
 
-Am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul logic de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil. Am utilizat Spring Data care permite generarea repositories pentru entitățile din baza de date. Acestea pot genera cele mai comune operațiuni de creare, citire, actualizare și ștergere (CRUD) și interogări personalizate. Un exemplu se poate observa în imaginea de mai jos.
+În mod obișnuit, componenta client nu partajează resursele sale, ci solicită diverse date și servicii de la server. Cele două componente sunt conectate prin intermediul unor conectori de tip request-response. Comunicarea între ele este posibilă prin utilizarea unui limbaj comun și respectarea unor reguli de bază stabilite într-un protocol de comunicație. Atunci când se transmit informații sensibile, este necesară criptarea pentru a asigura securitatea comunicării între client și server.
 
-![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/df6a6b2a-aa23-42e9-8037-0b7925c6a41d)
+Principalul avantaj al utilizării modelului Client-Server constă în *centralizarea datelor cu același scop* într-un singur loc, ceea ce oferă un grad ridicat de scalabilitate, organizare și eficiență. Întreținerea sistemului este facilitată, deoarece componentele server și client pot fi modificate și actualizate separat. Totuși, acest model prezintă și unele *vulnerabilități*, cum ar fi expunerea la atacuri de tip Phishing, Man in the Middle și Denial of Service. De asemenea, în cazul în care serverul devine indisponibil, utilizatorii vor fi deconectați și nu vor putea accesa aplicația.
+
+![client-server drawio](https://github.com/user-attachments/assets/82abf63c-193d-4337-9b9f-725d964cc987)
 
 * #### Data Transfer Object Pattern
 
@@ -111,14 +115,9 @@ Clasa UserDTO conține proprietăți comune clasei Users inițiale precum userna
 
 ![image](https://github.com/user-attachments/assets/4c8aabd8-2363-4ce6-a48a-41007066a8f7)
 
-* #### Client Server Pattern
-  
-Modelul Client-Server este o arhitectură de calcul distribuită care împarte aplicațiile software în două roluri distincte: client și server. Acest model arhitectural permite separarea preocupărilor între interfața cu utilizatorul (client) și procesarea sau stocarea datelor (server). Modelul Client-Server este o structură care distribuie sarcini între furnizorii de resurse sau servicii numite servere și elementele care solicită resurse sau servicii, numite clienți.
+* #### Repository Pattern
 
-În mod obișnuit, componenta client nu partajează resursele sale, ci solicită diverse date și servicii de la server. Cele două componente sunt conectate prin intermediul unor conectori de tip request-response. Comunicarea între ele este posibilă prin utilizarea unui limbaj comun și respectarea unor reguli de bază stabilite într-un protocol de comunicație. Atunci când se transmit informații sensibile, este necesară criptarea pentru a asigura securitatea comunicării între client și server.
+Am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul logic de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil. Am utilizat Spring Data care permite generarea repositories pentru entitățile din baza de date. Acestea pot genera cele mai comune operațiuni de creare, citire, actualizare și ștergere (CRUD) și interogări personalizate. Un exemplu se poate observa în imaginea de mai jos.
 
-Principalul avantaj al utilizării modelului Client-Server constă în *centralizarea datelor cu același scop* într-un singur loc, ceea ce oferă un grad ridicat de scalabilitate, organizare și eficiență. Întreținerea sistemului este facilitată, deoarece componentele server și client pot fi modificate și actualizate separat. Totuși, acest model prezintă și unele *vulnerabilități*, cum ar fi expunerea la atacuri de tip Phishing, Man in the Middle și Denial of Service. De asemenea, în cazul în care serverul devine indisponibil, utilizatorii vor fi deconectați și nu vor putea accesa aplicația.
-
-![client-server drawio](https://github.com/user-attachments/assets/82abf63c-193d-4337-9b9f-725d964cc987)
-
+![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/df6a6b2a-aa23-42e9-8037-0b7925c6a41d)
 
