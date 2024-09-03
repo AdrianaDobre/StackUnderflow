@@ -98,17 +98,16 @@ Am folosit repositories pentru accesarea contextului bazei de date, deoarece ofe
 
 * #### Data Transfer Object Pattern
 
-Data Transfer Object (DTO) este un design pattern folosit în mod frecvent în dezvoltarea de software pentru a facilita transferul de date între diferite componente ale unei aplicații, mai ales în cazul în care aceste componente se află pe servere diferite sau necesită comunicare prin rețea. Scopul principal al acestui pattern este *reducerea numărului de apeluri la server* prin gruparea mai multor date într-un singur obiect, care este apoi transmis într-o singură cerere.
-
+Data Transfer Object (DTO) este un design pattern folosit în mod frecvent în dezvoltarea de software pentru a facilita transferul de date între diferite componente ale unei aplicații, mai ales în cazul în care aceste componente se află pe servere diferite sau necesită comunicare prin rețea. Scopul principal al acestui pattern este *reducerea numărului de request-uri la server* prin gruparea mai multor date într-un singur obiect, care este apoi transmis într-o singur răspuns.
 Un alt avantaj al utilizării DTO este *simplificarea procesului de mapare a datelor* între diferite layere ale aplicației. Într-un sistem complex, datele trec adesea prin multiple straturi - de la bazele de date și serviciile de business logic, până la interfața cu utilizatorul. Utilizând DTO-uri, aceste date pot fi mapate eficient între layere fără a compromite integritatea modelelor.
 
 De asemenea, DTO-urile sunt esențiale în aplicarea principiului "separation of concerns" (separarea responsabilităților). Prin introducerea acestor obiecte intermediare, se evită expunerea directă a entităților din domeniu către exteriorul aplicației, ceea ce poate preveni modificări neintenționate sau acces neautorizat la date sensibile. DTO-urile permit filtrarea și transformarea datelor înainte ca acestea să ajungă la utilizator sau la alte sisteme externe, asigurând astfel un *nivel sporit de securitate și control asupra datelor care sunt transferate*.
 
-In aplicatia web StackUnderflow, DTO-urile sunt folosite pentru transferul si filtrarea datelor intre backend-ul si frontend-ul aplicatiei. Vom lua ca exemplu clasa Users care corespunde cu modelul din baza de date a aplicatiei (in Java in clasa Users sunt definite atat proprietatile obiectului, cat si relatiile pe care le are acesta). 
+În aplicația web StackUnderflow, DTO-urile sunt folosite pentru transferul și filtrarea datelor între backend-ul și frontend-ul aplicației. Vom lua ca exemplu clasa Users care corespunde cu entitatea din baza de date a aplicației (în Java în clasa Users sunt definite atât proprietățile obiectului, cât și relațiile pe care le are acesta). 
 
 ![image](https://github.com/user-attachments/assets/44aa2670-3caa-456f-a415-e6d24f9cd655)
 
-Clasa UserDTO contine proprietati comune clasei Users initiale precum username, email si phoneNumber care vor fi populate printr-o mapare simpla intre cele doua clase. In plus contine si proprietati noi ce sunt necesare afisarii informatiilor in frontend precum badges si votes; acestea fiind populate si verificate la momentul crearii request-ului. De asemenea, se poate observa cum anumite proprietati lipsesc, password si role, pentru a nu trimite catre frontend date sensibile. In final, informatiile din DTO sunt trimise catre frontend, urmand ca datele sa fie afisate utilizatorilor.
+Clasa UserDTO conține proprietăți comune clasei Users inițiale precum username, email și phoneNumber care vor fi populate printr-o mapare simplă între cele două clase. În plus conține și proprietăți noi ce sunt necesare afișării informațiilor în frontend precum badges și votes; acestea fiind populate și verificate la momentul creării request-ului. De asemenea, se poate observa cum anumite proprietăți lipsesc, password și role, pentru a nu trimite către frontend date sensibile. În final, informațiile din DTO sunt trimise către frontend, urmând ca datele să fie afișate utilizatorilor.
 
 ![image](https://github.com/user-attachments/assets/4c8aabd8-2363-4ce6-a48a-41007066a8f7)
 
@@ -120,7 +119,6 @@ Modelul Client-Server este o arhitectură de calcul distribuită care împarte a
 
 Principalul avantaj al utilizării modelului Client-Server constă în *centralizarea datelor cu același scop* într-un singur loc, ceea ce oferă un grad ridicat de scalabilitate, organizare și eficiență. Întreținerea sistemului este facilitată, deoarece componentele server și client pot fi modificate și actualizate separat. Totuși, acest model prezintă și unele *vulnerabilități*, cum ar fi expunerea la atacuri de tip Phishing, Man in the Middle și Denial of Service. De asemenea, în cazul în care serverul devine indisponibil, utilizatorii vor fi deconectați și nu vor putea accesa aplicația.
 
-In aplicatia StackUnderflow un DTO este o clasă Java simplă care ajută la rafinarea unui obiect pentru a fi transferat în cel mai eficient și sigur mod din backend către client (în cazul nostru frontend).
 ![client-server drawio](https://github.com/user-attachments/assets/82abf63c-193d-4337-9b9f-725d964cc987)
 
 
