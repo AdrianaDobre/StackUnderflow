@@ -102,7 +102,8 @@ Principalul avantaj al utilizării modelului Client-Server constă în *centrali
 
 * #### Data Transfer Object Pattern
 
-Data Transfer Object (DTO) este un design pattern folosit în mod frecvent în dezvoltarea de software pentru a facilita transferul de date între diferite componente ale unei aplicații, mai ales în cazul în care aceste componente se află pe servere diferite sau necesită comunicare prin rețea. Scopul principal al acestui pattern este *reducerea numărului de request-uri la server* prin gruparea mai multor date într-un singur obiect, care este apoi transmis într-o singur răspuns.
+Data Transfer Object (DTO) este un model folosit în mod frecvent în dezvoltarea de software pentru a facilita transferul de date între diferite componente ale unei aplicații, mai ales în cazul în care aceste componente se află pe servere diferite sau necesită comunicare prin rețea. Scopul principal al acestui pattern este *reducerea numărului de request-uri la server* prin gruparea mai multor date într-un singur obiect, care este apoi transmis într-o singur răspuns.
+
 Un alt avantaj al utilizării DTO este *simplificarea procesului de mapare a datelor* între diferite layere ale aplicației. Într-un sistem complex, datele trec adesea prin multiple straturi - de la bazele de date și serviciile de business logic, până la interfața cu utilizatorul. Utilizând DTO-uri, aceste date pot fi mapate eficient între layere fără a compromite integritatea modelelor.
 
 De asemenea, DTO-urile sunt esențiale în aplicarea principiului "separation of concerns" (separarea responsabilităților). Prin introducerea acestor obiecte intermediare, se evită expunerea directă a entităților din domeniu către exteriorul aplicației, ceea ce poate preveni modificări neintenționate sau acces neautorizat la date sensibile. DTO-urile permit filtrarea și transformarea datelor înainte ca acestea să ajungă la utilizator sau la alte sisteme externe, asigurând astfel un *nivel sporit de securitate și control asupra datelor care sunt transferate*.
@@ -117,7 +118,16 @@ Clasa UserDTO conține proprietăți comune clasei Users inițiale precum userna
 
 * #### Repository Pattern
 
-Am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul logic de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil. Am utilizat Spring Data care permite generarea repositories pentru entitățile din baza de date. Acestea pot genera cele mai comune operațiuni de creare, citire, actualizare și ștergere (CRUD) și interogări personalizate. Un exemplu se poate observa în imaginea de mai jos.
+Repository Pattern este un model care funcționează ca un strat intermediar între logica de business a unei aplicații și stocarea datelor. Acest pattern oferă un mod structurat și standardizat de a accesa, gestiona și manipula datele, în timp ce ascunde detaliile tehnologice ale stocării datelor. Unul dintre principalele sale avantaje este *promovarea unei separări clare a responsabilităților*, care face software-ul mai ușor de întreținut, testat și adaptat la schimbările datelor, fără a complica logica de bază a aplicației cu detalii legate de accesul la date.
+
+Astfel, în dezvoltarea aplicației, am folosit repositories pentru accesarea contextului bazei de date, deoarece oferă o mai bună menținere și decuplare a infrastructurii. Ele separă stratul de date de restul straturilor și ajută la scrierea unui proiect curat și lizibil. Am utilizat Spring Data care permite generarea repositories pentru entitățile din baza de date. Acestea pot genera cele mai comune operațiuni de creare, citire, actualizare și ștergere (CRUD) și interogări personalizate. 
+
+Un exemplu se poate observa în imaginea de mai jos unde sunt definite mai multe interogări personalizate pentru a accesa și gestiona comentariile din baza de date. 
 
 ![image](https://github.com/AdrianaDobre/StackUnderflow/assets/79576756/df6a6b2a-aa23-42e9-8037-0b7925c6a41d)
+
+Apoi, după ce au fost definite metodele în repository, în layerul dedicat logicii de business (servicii) nu a mai fost accesată direct baza de date, ci acest lucru a fost realizat cu ajutorul apelării metodelor din repository. Luăm ca exemplu alegerea celui mai bun comentariu:
+
+![image](https://github.com/user-attachments/assets/60d9c769-a447-47ac-ac4c-f0ebbf37f330)
+
 
